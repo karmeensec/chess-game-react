@@ -9,12 +9,22 @@ const Chessboard = () => {
 
   for (let j = verticalAxis.length - 1; j >= 0; j--) {
     for (let i = 0; i < horizontalAxis.length; i++) {
-      board.push(
-        <div className="tile">
-          {" "}
-          {horizontalAxis[i]} {verticalAxis[j]}{" "}
-        </div>
-      );
+      const startZero = 2;
+      const number = i + j + startZero;
+
+      if (number % 2 === 0) {
+        board.push(
+          <div className="tile black-tile ">
+            {horizontalAxis[i]} {verticalAxis[j]}
+          </div>
+        );
+      } else {
+        board.push(
+          <div className="tile white-tile ">
+            {horizontalAxis[i]} {verticalAxis[j]}
+          </div>
+        );
+      }
     }
   }
 
