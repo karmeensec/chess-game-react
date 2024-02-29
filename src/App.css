@@ -1,0 +1,13 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+#app {
+  display: grid;
+  grid-template-columns: repeat(8, 87.5px);
+  grid-template-rows: repeat(8, 87.5px);
+  place-content: center;
+  height: 100vh;
+  background-color: #2d2c2c;
+}
