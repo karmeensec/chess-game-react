@@ -76,16 +76,27 @@ initialBoardState.push({ image: whiteKing, x: 4, y: 0 });
 const Chessboard = () => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
 
+  const [gridX, setGridX] = useState(0);
+  const [gridY, setGridY] = useState(0);
+  const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
+
   const board = [];
 
   const chessboardRef = useRef<HTMLDivElement>(null);
 
-  let activePiece: HTMLElement | null = null;
+  const grabPiece = (e: React.MouseEvent) => {
+    const element = e.target as HTMLDivElement;
+    const chessboard = chessboardRef.current;
 
-  const grabPiece = (e: React.MouseEvent<HTMLDivElement>) => {
-    const element = e.target as HTMLElement;
+    if (element.classList.contains("chess-piece") && chessboard) {
+      const gridX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+      const gridY = Math.abs(
+        Math.ceil((e.clientY - chessboard.offsetTop - 700) / 100)
+      );
 
-    if (element.classList.contains("chess-piece")) {
+      setGridX(gridX);
+      setGridY(gridY);
+
       const mouseX = e.clientX - 50;
       const mouseY = e.clientY - 50;
 
@@ -94,11 +105,11 @@ const Chessboard = () => {
       element.style.left = `${mouseX}px`;
       element.style.top = `${mouseY}px`;
 
-      activePiece = element;
+      setActivePiece(element);
     }
   };
 
-  const movePiece = (e: React.MouseEvent<HTMLDivElement>) => {
+  const movePiece = (e: React.MouseEvent) => {
     const chessboard = chessboardRef.current;
 
     if (activePiece && chessboard) {
@@ -132,7 +143,7 @@ const Chessboard = () => {
     }
   };
 
-  const dropPiece = (e: React.MouseEvent<HTMLDivElement>) => {
+  const dropPiece = (e: React.MouseEvent) => {
     console.log(e.target);
 
     const chessboard = chessboardRef.current;
@@ -142,11 +153,12 @@ const Chessboard = () => {
       const y = Math.abs(
         Math.ceil((e.clientY - chessboard.offsetTop - 700) / 100)
       );
+
       console.log(x, y);
 
       setPieces((value) => {
         const pieces = value.map((p) => {
-          if (p.x === 1 && p.y === 0) {
+          if (p.x === gridX && p.y === gridY) {
             p.x = x;
             p.y = y;
           }
@@ -156,7 +168,7 @@ const Chessboard = () => {
       });
 
       // pieces[0].x = 5;
-      activePiece = null;
+      setActivePiece(null);
     }
   };
 
@@ -165,7 +177,7 @@ const Chessboard = () => {
       const startZero = 2;
       const number = i + j + startZero;
 
-      let image = "";
+      let image = undefined;
 
       pieces.forEach((piece) => {
         if (piece.x === i && piece.y === j) {
