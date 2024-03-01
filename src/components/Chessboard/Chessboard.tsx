@@ -139,20 +139,23 @@ const Chessboard = () => {
 
     if (activePiece && chessboard) {
       const x = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
-      const y = Math.floor((e.clientY - chessboard.offsetTop) / 100);
+      const y = Math.abs(
+        Math.ceil((e.clientY - chessboard.offsetTop - 700) / 100)
+      );
       console.log(x, y);
 
       setPieces((value) => {
-        const piece = value.map((p) => {
+        const pieces = value.map((p) => {
           if (p.x === 1 && p.y === 0) {
-            p.x = 0;
+            p.x = x;
+            p.y = y;
           }
           return p;
         });
-        return piece;
+        return pieces;
       });
 
-      pieces[0].x = 5;
+      // pieces[0].x = 5;
       activePiece = null;
     }
   };
