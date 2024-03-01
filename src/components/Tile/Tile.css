@@ -1,6 +1,6 @@
 .tile {
-  width: 87.5px;
-  height: 87.5px;
+  width: 100px;
+  height: 100px;
   display: grid;
   place-content: center;
 }
@@ -9,7 +9,7 @@
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;
-  background-size: 70px;
+  background-size: 80px;
   background-position: center;
 }
 
@@ -30,5 +30,5 @@
 }
 
 .tile img {
-  width: 70px;
+  width: 80px;
 }

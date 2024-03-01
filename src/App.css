@@ -5,8 +5,8 @@
 }
 #app {
   display: grid;
-  grid-template-columns: repeat(8, 87.5px);
-  grid-template-rows: repeat(8, 87.5px);
+  grid-template-columns: repeat(8, 100px);
+  grid-template-rows: repeat(8, 100px);
   place-content: center;
   height: 100vh;
   background-image: radial-gradient(
