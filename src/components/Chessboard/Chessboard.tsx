@@ -13,6 +13,7 @@ import whiteQueen from "../../assets/images/queen.png";
 import blackKing from "../../assets/images/king (1).png";
 import whiteKing from "../../assets/images/king.png";
 import { useRef, useState } from "react";
+import Referee from "../referee/Referee.ts";
 
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const verticalAxis = ["1", " 2", " 3", " 4", " 5", "6", " 7", " 8"];
@@ -84,6 +85,8 @@ const Chessboard = () => {
 
   const chessboardRef = useRef<HTMLDivElement>(null);
 
+  const referee = new Referee();
+
   const grabPiece = (e: React.MouseEvent) => {
     const element = e.target as HTMLDivElement;
     const chessboard = chessboardRef.current;
@@ -91,7 +94,7 @@ const Chessboard = () => {
     if (element.classList.contains("chess-piece") && chessboard) {
       const gridX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
       const gridY = Math.abs(
-        Math.ceil((e.clientY - chessboard.offsetTop - 700) / 100)
+        Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
       setGridX(gridX);
@@ -116,7 +119,7 @@ const Chessboard = () => {
       const minMouseX = chessboard.offsetLeft - 25;
       const minMouseY = chessboard.offsetTop - 25;
       const maxMouseX = chessboard.offsetLeft + chessboard.clientWidth - 75;
-      const maxMouseY = chessboard.offsetTop + chessboard.clientHeight - 85;
+      const maxMouseY = chessboard.offsetTop + chessboard.clientHeight - 75;
 
       const mouseX = e.clientX - 50;
       const mouseY = e.clientY - 50;
@@ -151,10 +154,12 @@ const Chessboard = () => {
     if (activePiece && chessboard) {
       const x = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
       const y = Math.abs(
-        Math.ceil((e.clientY - chessboard.offsetTop - 700) / 100)
+        Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
-      console.log(x, y);
+      referee.isValidMove();
+
+      // Update the piece position
 
       setPieces((value) => {
         const pieces = value.map((p) => {
