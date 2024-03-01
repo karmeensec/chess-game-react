@@ -22,6 +22,10 @@ export default class Referee {
             console.log("Valid Move");
             return true;
           }
+        } else {
+          if (prevX === x && y - prevY === 1) {
+            return true;
+          }
         }
       }
 
