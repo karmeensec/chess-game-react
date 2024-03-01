@@ -22,55 +22,123 @@ interface Piece {
   image: string;
   x: number;
   y: number;
+  type: PieceType;
 }
 
-// const pieces: Piece[] = [];
+export enum PieceType {
+  PAWN,
+  ROOK,
+  BISHOP,
+  KNIGHT,
+  QUEEN,
+  KING,
+}
 
 const initialBoardState: Piece[] = [];
 
 // Pawns
 
 for (let i = 0; i < 8; i++) {
-  initialBoardState.push({ image: blackPawn, x: i, y: 6 });
+  initialBoardState.push({
+    image: blackPawn,
+    x: i,
+    y: 6,
+    type: PieceType.PAWN,
+  });
 }
 
 for (let i = 0; i < 8; i++) {
-  initialBoardState.push({ image: whitePawn, x: i, y: 1 });
+  initialBoardState.push({
+    image: whitePawn,
+    x: i,
+    y: 1,
+    type: PieceType.PAWN,
+  });
 }
 
 // Rooks
 
-initialBoardState.push({ image: blackRook, x: 0, y: 7 });
-initialBoardState.push({ image: blackRook, x: 7, y: 7 });
+initialBoardState.push({ image: blackRook, x: 0, y: 7, type: PieceType.ROOK });
+initialBoardState.push({ image: blackRook, x: 7, y: 7, type: PieceType.ROOK });
 
-initialBoardState.push({ image: whiteRook, x: 0, y: 0 });
-initialBoardState.push({ image: whiteRook, x: 7, y: 0 });
+initialBoardState.push({ image: whiteRook, x: 0, y: 0, type: PieceType.ROOK });
+initialBoardState.push({ image: whiteRook, x: 7, y: 0, type: PieceType.ROOK });
 
 // Knights
 
-initialBoardState.push({ image: blackKnight, x: 1, y: 7 });
-initialBoardState.push({ image: blackKnight, x: 6, y: 7 });
+initialBoardState.push({
+  image: blackKnight,
+  x: 1,
+  y: 7,
+  type: PieceType.KNIGHT,
+});
+initialBoardState.push({
+  image: blackKnight,
+  x: 6,
+  y: 7,
+  type: PieceType.KNIGHT,
+});
 
-initialBoardState.push({ image: whiteKnight, x: 1, y: 0 });
-initialBoardState.push({ image: whiteKnight, x: 6, y: 0 });
+initialBoardState.push({
+  image: whiteKnight,
+  x: 1,
+  y: 0,
+  type: PieceType.KNIGHT,
+});
+initialBoardState.push({
+  image: whiteKnight,
+  x: 6,
+  y: 0,
+  type: PieceType.KNIGHT,
+});
 
 // Bishops
 
-initialBoardState.push({ image: blackBishop, x: 2, y: 7 });
-initialBoardState.push({ image: blackBishop, x: 5, y: 7 });
+initialBoardState.push({
+  image: blackBishop,
+  x: 2,
+  y: 7,
+  type: PieceType.BISHOP,
+});
+initialBoardState.push({
+  image: blackBishop,
+  x: 5,
+  y: 7,
+  type: PieceType.BISHOP,
+});
 
-initialBoardState.push({ image: whiteBishop, x: 2, y: 0 });
-initialBoardState.push({ image: whiteBishop, x: 5, y: 0 });
+initialBoardState.push({
+  image: whiteBishop,
+  x: 2,
+  y: 0,
+  type: PieceType.BISHOP,
+});
+initialBoardState.push({
+  image: whiteBishop,
+  x: 5,
+  y: 0,
+  type: PieceType.BISHOP,
+});
 
 // Queen
 
-initialBoardState.push({ image: blackQueen, x: 3, y: 7 });
-initialBoardState.push({ image: whiteQueen, x: 3, y: 0 });
+initialBoardState.push({
+  image: blackQueen,
+  x: 3,
+  y: 7,
+  type: PieceType.QUEEN,
+});
+initialBoardState.push({
+  image: whiteQueen,
+  x: 3,
+  y: 0,
+  type: PieceType.QUEEN,
+});
 
 // King
 
-initialBoardState.push({ image: blackKing, x: 4, y: 7 });
-initialBoardState.push({ image: whiteKing, x: 4, y: 0 });
+initialBoardState.push({ image: blackKing, x: 4, y: 7, type: PieceType.KING });
+initialBoardState.push({ image: whiteKing, x: 4, y: 0, type: PieceType.KING });
 
 // ----------------------------------------------------------------
 
@@ -157,13 +225,13 @@ const Chessboard = () => {
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
-      referee.isValidMove();
-
       // Update the piece position
 
       setPieces((value) => {
         const pieces = value.map((p) => {
           if (p.x === gridX && p.y === gridY) {
+            referee.isValidMove(gridX, gridY, x, y, p.type);
+
             p.x = x;
             p.y = y;
           }
