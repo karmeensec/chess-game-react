@@ -13,6 +13,14 @@
   background-position: center;
 }
 
+.chess-piece:hover {
+  cursor: grab;
+}
+
+.chess-piece:active {
+  cursor: grabbing;
+}
+
 .black-tile {
   background-color: #6e2c00;
 }
