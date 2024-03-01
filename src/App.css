@@ -9,5 +9,12 @@
   grid-template-rows: repeat(8, 87.5px);
   place-content: center;
   height: 100vh;
-  background-color: #2d2c2c;
+  background-image: radial-gradient(
+    circle,
+    #b5b9c2,
+    #c2cbd1,
+    #d3ddde,
+    #e7eeec,
+    #fcfffc
+  );
 }
