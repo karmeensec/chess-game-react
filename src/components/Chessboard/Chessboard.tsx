@@ -68,6 +68,10 @@ pieces.push({ image: whiteQueen, x: 3, y: 0 });
 pieces.push({ image: blackKing, x: 4, y: 7 });
 pieces.push({ image: whiteKing, x: 4, y: 0 });
 
+// ----------------------------------------------------------------
+
+let activePiece: HTMLElement | null = null;
+
 const grabPiece = (e: React.MouseEvent<HTMLDivElement>) => {
   const element = e.target as HTMLElement;
 
@@ -79,6 +83,20 @@ const grabPiece = (e: React.MouseEvent<HTMLDivElement>) => {
 
     element.style.left = `${mouseX}px`;
     element.style.top = `${mouseY}px`;
+
+    activePiece = element;
+  }
+};
+
+const movePiece = (e: React.MouseEvent<HTMLDivElement>) => {
+  if (activePiece) {
+    const mouseX = e.clientX - 50;
+    const mouseY = e.clientY - 50;
+
+    activePiece.style.position = "absolute";
+
+    activePiece.style.left = `${mouseX}px`;
+    activePiece.style.top = `${mouseY}px`;
   }
 };
 
@@ -105,9 +123,12 @@ const Chessboard = () => {
   }
 
   return (
-    <div id="chessboard" onMouseDown={(e) => grabPiece(e)}>
-      {" "}
-      {board}{" "}
+    <div
+      id="chessboard"
+      onMouseDown={(e) => grabPiece(e)}
+      onMouseMove={(e) => movePiece(e)}
+    >
+      {board}
     </div>
   );
 };
