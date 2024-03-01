@@ -1,6 +1,7 @@
 import "./Chessboard.css";
 import Tile from "../Tile/Tile";
 import blackPawn from "../../assets/images/pawn (1).png";
+import whitePawn from "../../assets/images/pawn.png";
 
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const verticalAxis = ["1", " 2", " 3", " 4", " 5", "6", " 7", " 8"];
@@ -13,7 +14,13 @@ interface Piece {
 
 const pieces: Piece[] = [];
 
-pieces.push({ image: blackPawn, x: 0, y: 6 });
+for (let i = 0; i < 8; i++) {
+  pieces.push({ image: blackPawn, x: i, y: 6 });
+}
+
+for (let i = 0; i < 8; i++) {
+  pieces.push({ image: whitePawn, x: i, y: 1 });
+}
 
 const Chessboard = () => {
   const board = [];
