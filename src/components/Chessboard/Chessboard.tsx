@@ -12,7 +12,7 @@ import blackQueen from "../../assets/images/queen (1).png";
 import whiteQueen from "../../assets/images/queen.png";
 import blackKing from "../../assets/images/king (1).png";
 import whiteKing from "../../assets/images/king.png";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const verticalAxis = ["1", " 2", " 3", " 4", " 5", "6", " 7", " 8"];
@@ -23,55 +23,59 @@ interface Piece {
   y: number;
 }
 
-const pieces: Piece[] = [];
+// const pieces: Piece[] = [];
+
+const initialBoardState: Piece[] = [];
 
 // Pawns
 
 for (let i = 0; i < 8; i++) {
-  pieces.push({ image: blackPawn, x: i, y: 6 });
+  initialBoardState.push({ image: blackPawn, x: i, y: 6 });
 }
 
 for (let i = 0; i < 8; i++) {
-  pieces.push({ image: whitePawn, x: i, y: 1 });
+  initialBoardState.push({ image: whitePawn, x: i, y: 1 });
 }
 
 // Rooks
 
-pieces.push({ image: blackRook, x: 0, y: 7 });
-pieces.push({ image: blackRook, x: 7, y: 7 });
+initialBoardState.push({ image: blackRook, x: 0, y: 7 });
+initialBoardState.push({ image: blackRook, x: 7, y: 7 });
 
-pieces.push({ image: whiteRook, x: 0, y: 0 });
-pieces.push({ image: whiteRook, x: 7, y: 0 });
+initialBoardState.push({ image: whiteRook, x: 0, y: 0 });
+initialBoardState.push({ image: whiteRook, x: 7, y: 0 });
 
 // Knights
 
-pieces.push({ image: blackKnight, x: 1, y: 7 });
-pieces.push({ image: blackKnight, x: 6, y: 7 });
+initialBoardState.push({ image: blackKnight, x: 1, y: 7 });
+initialBoardState.push({ image: blackKnight, x: 6, y: 7 });
 
-pieces.push({ image: whiteKnight, x: 1, y: 0 });
-pieces.push({ image: whiteKnight, x: 6, y: 0 });
+initialBoardState.push({ image: whiteKnight, x: 1, y: 0 });
+initialBoardState.push({ image: whiteKnight, x: 6, y: 0 });
 
 // Bishops
 
-pieces.push({ image: blackBishop, x: 2, y: 7 });
-pieces.push({ image: blackBishop, x: 5, y: 7 });
+initialBoardState.push({ image: blackBishop, x: 2, y: 7 });
+initialBoardState.push({ image: blackBishop, x: 5, y: 7 });
 
-pieces.push({ image: whiteBishop, x: 2, y: 0 });
-pieces.push({ image: whiteBishop, x: 5, y: 0 });
+initialBoardState.push({ image: whiteBishop, x: 2, y: 0 });
+initialBoardState.push({ image: whiteBishop, x: 5, y: 0 });
 
 // Queen
 
-pieces.push({ image: blackQueen, x: 3, y: 7 });
-pieces.push({ image: whiteQueen, x: 3, y: 0 });
+initialBoardState.push({ image: blackQueen, x: 3, y: 7 });
+initialBoardState.push({ image: whiteQueen, x: 3, y: 0 });
 
 // King
 
-pieces.push({ image: blackKing, x: 4, y: 7 });
-pieces.push({ image: whiteKing, x: 4, y: 0 });
+initialBoardState.push({ image: blackKing, x: 4, y: 7 });
+initialBoardState.push({ image: whiteKing, x: 4, y: 0 });
 
 // ----------------------------------------------------------------
 
 const Chessboard = () => {
+  const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
+
   const board = [];
 
   const chessboardRef = useRef<HTMLDivElement>(null);
@@ -128,8 +132,27 @@ const Chessboard = () => {
     }
   };
 
-  const dropPiece = () => {
-    if (activePiece) {
+  const dropPiece = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log(e.target);
+
+    const chessboard = chessboardRef.current;
+
+    if (activePiece && chessboard) {
+      const x = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+      const y = Math.floor((e.clientY - chessboard.offsetTop) / 100);
+      console.log(x, y);
+
+      setPieces((value) => {
+        const piece = value.map((p) => {
+          if (p.x === 1 && p.y === 0) {
+            p.x = 0;
+          }
+          return p;
+        });
+        return piece;
+      });
+
+      pieces[0].x = 5;
       activePiece = null;
     }
   };
@@ -158,7 +181,7 @@ const Chessboard = () => {
       id="chessboard"
       onMouseDown={(e) => grabPiece(e)}
       onMouseMove={(e) => movePiece(e)}
-      onMouseUp={() => dropPiece()}
+      onMouseUp={(e) => dropPiece(e)}
       ref={chessboardRef}
     >
       {board}
