@@ -84,7 +84,9 @@ const Chessboard = () => {
         }
       });
 
-      board.push(<Tile number={number} image={image} />);
+      const key = `${i}-${j}`;
+
+      board.push(<Tile number={number} image={image} key={key} />);
     }
   }
 
