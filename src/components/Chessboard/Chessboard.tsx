@@ -74,7 +74,7 @@ pieces.push({ image: whiteKing, x: 4, y: 0 });
 const Chessboard = () => {
   const board = [];
 
-  const chessboardRef = useRef(null);
+  const chessboardRef = useRef<HTMLDivElement>(null);
 
   let activePiece: HTMLElement | null = null;
 
@@ -95,14 +95,36 @@ const Chessboard = () => {
   };
 
   const movePiece = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (activePiece) {
+    const chessboard = chessboardRef.current;
+
+    if (activePiece && chessboard) {
+      const minMouseX = chessboard.offsetLeft - 25;
+      const minMouseY = chessboard.offsetTop - 25;
+      const maxMouseX = chessboard.offsetLeft + chessboard.clientWidth - 75;
+      const maxMouseY = chessboard.offsetTop + chessboard.clientHeight - 85;
+
       const mouseX = e.clientX - 50;
       const mouseY = e.clientY - 50;
 
       activePiece.style.position = "absolute";
 
-      activePiece.style.left = `${mouseX}px`;
-      activePiece.style.top = `${mouseY}px`;
+      // Defining the limits to stay within the board
+
+      if (mouseX < minMouseX) {
+        activePiece.style.left = `${minMouseX}px`;
+      } else if (mouseX > maxMouseX) {
+        activePiece.style.left = `${maxMouseX}px`;
+      } else {
+        activePiece.style.left = `${mouseX}px`;
+      }
+
+      if (mouseY < minMouseY) {
+        activePiece.style.top = `${minMouseY}px`;
+      } else if (mouseY > maxMouseY) {
+        activePiece.style.top = `${maxMouseY}px`;
+      } else {
+        activePiece.style.top = `${mouseY}px`;
+      }
     }
   };
 
