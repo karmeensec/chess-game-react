@@ -44,10 +44,18 @@ export default class Referee {
         // Upper or Bottom Left Attacking
 
         console.log("Upper / Bottom Left");
+
+        if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
+          return true;
+        }
       } else if (x - prevX === 1 && y - prevY === pawnDirection) {
         // Upper or Bottom Right Attacking
 
         console.log("Upper / Bottom Right");
+
+        if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
+          return true;
+        }
       }
     }
 
@@ -58,6 +66,23 @@ export default class Referee {
     console.log("Check if tile is occupied");
 
     const piece = boardState.find((p) => p.x === x && p.y === y);
+
+    if (piece) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isTileOccupiedByEnemy(
+    x: number,
+    y: number,
+    boardState: Piece[],
+    team: TeamType
+  ): boolean {
+    const piece = boardState.find(
+      (p) => p.x === x && p.y === y && p.team !== team
+    );
 
     if (piece) {
       return true;
