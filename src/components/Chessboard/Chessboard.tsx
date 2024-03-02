@@ -283,41 +283,44 @@ const Chessboard = () => {
 
       const currentPiece = pieces.find((p) => p.x === gridX && p.y === gridY);
 
-      console.log(currentPiece);
-
       const attackedPiece = pieces.find((p) => p.x === x && p.y === y);
 
-      console.log(attackedPiece);
-      // Update the piece position
+      if (currentPiece) {
+        const validMove = referee.isValidMove(
+          gridX,
+          gridY,
+          x,
+          y,
+          currentPiece.type,
+          currentPiece.team,
+          pieces
+        );
 
-      setPieces((value) => {
-        const pieces = value.map((p) => {
-          if (p.x === gridX && p.y === gridY) {
-            const validMove = referee.isValidMove(
-              gridX,
-              gridY,
-              x,
-              y,
-              p.type,
-              p.team,
-              value
-            );
+        if (validMove) {
+          // Update the piece position
 
-            if (validMove) {
-              p.x = x;
-              p.y = y;
-            } else {
-              activePiece.style.position = "relative";
-              activePiece.style.removeProperty("top");
-              activePiece.style.removeProperty("left");
-            }
-          }
-          return p;
-        });
-        return pieces;
-      });
+          setPieces((value) => {
+            const pieces = value.reduce((results, piece) => {
+              if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
+                piece.x = x;
+                piece.y = y;
+                results.push(piece);
+              } else if (!(piece.x === x && piece.y === y)) {
+                results.push(piece);
+              }
 
-      // pieces[0].x = 5;
+              return results;
+            }, [] as Piece[]);
+
+            return pieces;
+          });
+        } else {
+          activePiece.style.position = "relative";
+          activePiece.style.removeProperty("top");
+          activePiece.style.removeProperty("left");
+        }
+      }
+
       setActivePiece(null);
     }
   };
