@@ -17,51 +17,31 @@ export default class Referee {
     console.log("Team type: ", team);
 
     if (type === PieceType.PAWN) {
-      if (team === TeamType.MY) {
-        if (prevY === 1) {
-          if (prevX === x && y - prevY === 1) {
-            console.log("Valid Move");
-            if (!this.isTileOccupied(x, y, boardState)) {
-              return true;
-            }
-          } else if (prevX === x && y - prevY === 2) {
+      const specialRow = team === TeamType.MY ? 1 : 6;
+      const pawnDirection = team === TeamType.MY ? 1 : -1;
+
+      if (prevY === specialRow) {
+        if (prevX === x && y - prevY === 1 * pawnDirection) {
+          if (!this.isTileOccupied(x, y, boardState)) {
+            return true;
+          } else if (prevX === x && y - prevY === 2 * pawnDirection) {
             if (
               !this.isTileOccupied(x, y, boardState) &&
-              !this.isTileOccupied(x, y - 1, boardState)
+              !this.isTileOccupied(x, y - pawnDirection, boardState)
             ) {
-              return true;
-            }
-          }
-        } else {
-          if (prevX === x && y - prevY === 1) {
-            if (!this.isTileOccupied(x, y, boardState)) {
               return true;
             }
           }
         }
       } else {
-        if (prevY === 6) {
-          if (y - prevY === -1) {
-            if (!this.isTileOccupied(x, y, boardState)) {
-              return true;
-            } else if (prevX === x && y - prevY === -2) {
-              if (
-                !this.isTileOccupied(x, y, boardState) &&
-                !this.isTileOccupied(x, y + 1, boardState)
-              ) {
-                return true;
-              }
-            }
-          } else {
-            if (prevX === x && y - prevY === -1) {
-              if (!this.isTileOccupied(x, y, boardState)) {
-                return true;
-              }
-            }
+        if (prevX === x && y - prevY === pawnDirection) {
+          if (!this.isTileOccupied(x, y, boardState)) {
+            return true;
           }
         }
       }
     }
+
     return false;
   }
 
