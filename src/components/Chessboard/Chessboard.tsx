@@ -281,6 +281,13 @@ const Chessboard = () => {
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
+      const currentPiece = pieces.find((p) => p.x === gridX && p.y === gridY);
+
+      console.log(currentPiece);
+
+      const attackedPiece = pieces.find((p) => p.x === x && p.y === y);
+
+      console.log(attackedPiece);
       // Update the piece position
 
       setPieces((value) => {
