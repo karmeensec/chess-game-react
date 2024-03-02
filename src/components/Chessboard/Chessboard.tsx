@@ -18,7 +18,7 @@ import Referee from "../referee/Referee.ts";
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const verticalAxis = ["1", " 2", " 3", " 4", " 5", "6", " 7", " 8"];
 
-interface Piece {
+export interface Piece {
   image: string;
   x: number;
   y: number;
@@ -292,7 +292,8 @@ const Chessboard = () => {
               x,
               y,
               p.type,
-              p.team
+              p.team,
+              value
             );
 
             if (validMove) {
@@ -319,7 +320,7 @@ const Chessboard = () => {
       const startZero = 2;
       const number = i + j + startZero;
 
-      let image = undefined;
+      let image = "";
 
       pieces.forEach((piece) => {
         if (piece.x === i && piece.y === j) {
