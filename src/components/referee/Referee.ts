@@ -19,26 +19,44 @@ export default class Referee {
     if (type === PieceType.PAWN) {
       if (team === TeamType.MY) {
         if (prevY === 1) {
-          if (prevX === x && (y - prevY === 1 || y - prevY === 2)) {
+          if (prevX === x && y - prevY === 1) {
             console.log("Valid Move");
             if (!this.isTileOccupied(x, y, boardState)) {
+              return true;
+            }
+          } else if (prevX === x && y - prevY === 2) {
+            if (
+              !this.isTileOccupied(x, y, boardState) &&
+              !this.isTileOccupied(x, y - 1, boardState)
+            ) {
               return true;
             }
           }
         } else {
           if (prevX === x && y - prevY === 1) {
-            return true;
+            if (!this.isTileOccupied(x, y, boardState)) {
+              return true;
+            }
           }
         }
       } else {
         if (prevY === 6) {
-          if (prevX === x && (y - prevY === -1 || y - prevY === -2)) {
+          if (y - prevY === -1) {
             if (!this.isTileOccupied(x, y, boardState)) {
               return true;
+            } else if (prevX === x && y - prevY === -2) {
+              if (
+                !this.isTileOccupied(x, y, boardState) &&
+                !this.isTileOccupied(x, y + 1, boardState)
+              ) {
+                return true;
+              }
             }
           } else {
             if (prevX === x && y - prevY === -1) {
-              return true;
+              if (!this.isTileOccupied(x, y, boardState)) {
+                return true;
+              }
             }
           }
         }
