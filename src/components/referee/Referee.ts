@@ -27,9 +27,18 @@ export default class Referee {
             return true;
           }
         }
+      } else {
+        if (prevY === 6) {
+          if (prevX === x && (y - prevY === -1 || y - prevY === -2)) {
+            return true;
+          } else {
+            if (prevX === x && y - prevY === -1) {
+              return true;
+            }
+          }
+        }
       }
-
-      return false;
     }
+    return false;
   }
 }
