@@ -90,4 +90,34 @@ export default class Referee {
       return false;
     }
   }
+
+  isEnPassantMove(
+    prevX: number,
+    prevY: number,
+    x: number,
+    y: number,
+    type: PieceType,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
+    const pawnDirection = team === TeamType.MY ? 1 : -1;
+
+    if (type === PieceType.PAWN) {
+      // Pawn Attacking
+      if (
+        x - prevX === -1 ||
+        (x - prevX === 1 && y - prevY === pawnDirection)
+      ) {
+        const piece = boardState.find(
+          (p) => p.x === x && p.y === y - pawnDirection && p.enPassant
+        );
+
+        if (piece) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
 }
