@@ -299,21 +299,35 @@ const Chessboard = () => {
         if (validMove) {
           // Update the piece position
 
-          setPieces((value) => {
-            const pieces = value.reduce((results, piece) => {
-              if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
-                piece.x = x;
-                piece.y = y;
-                results.push(piece);
-              } else if (!(piece.x === x && piece.y === y)) {
-                results.push(piece);
-              }
+          const updatedPieces = pieces.reduce((results, piece) => {
+            if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
+              piece.x = x;
+              piece.y = y;
+              results.push(piece);
+            } else if (!(piece.x === x && piece.y === y)) {
+              results.push(piece);
+            }
 
-              return results;
-            }, [] as Piece[]);
+            return results;
+          }, [] as Piece[]);
 
-            return pieces;
-          });
+          setPieces(updatedPieces);
+
+          // setPieces((value) => {
+          //   const pieces = value.reduce((results, piece) => {
+          //     if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
+          //       piece.x = x;
+          //       piece.y = y;
+          //       results.push(piece);
+          //     } else if (!(piece.x === x && piece.y === y)) {
+          //       results.push(piece);
+          //     }
+
+          //     return results;
+          //   }, [] as Piece[]);
+
+          //   return pieces;
+          // });
         } else {
           activePiece.style.position = "relative";
           activePiece.style.removeProperty("top");
