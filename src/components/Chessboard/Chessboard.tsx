@@ -307,7 +307,28 @@ const Chessboard = () => {
           pieces
         );
 
-        if (validMove) {
+        const pawnDirection = currentPiece.team === TeamType.MY ? 1 : -1;
+
+        if (enPassantMove) {
+          const updatedPieces = pieces.reduce((results, piece) => {
+            if (gridX === piece.x && gridY === piece.y) {
+              piece.enPassant === false;
+              piece.x = x;
+              piece.y = y;
+              results.push(piece);
+            } else if (!(piece.x === x && piece.y === y - pawnDirection)) {
+              if (piece.type === PieceType.PAWN) {
+                piece.enPassant === false;
+              }
+
+              results.push(piece);
+            }
+
+            return results;
+          }, [] as Piece[]);
+
+          setPieces(updatedPieces);
+        } else if (validMove) {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
