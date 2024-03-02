@@ -20,24 +20,20 @@ export default class Referee {
       const specialRow = team === TeamType.MY ? 1 : 6;
       const pawnDirection = team === TeamType.MY ? 1 : -1;
 
-      if (prevY === specialRow) {
-        if (prevX === x && y - prevY === 1 * pawnDirection) {
-          if (!this.isTileOccupied(x, y, boardState)) {
-            return true;
-          } else if (prevX === x && y - prevY === 2 * pawnDirection) {
-            if (
-              !this.isTileOccupied(x, y, boardState) &&
-              !this.isTileOccupied(x, y - pawnDirection, boardState)
-            ) {
-              return true;
-            }
-          }
+      if (
+        prevX === x &&
+        prevY === specialRow &&
+        y - prevY === 2 * pawnDirection
+      ) {
+        if (
+          !this.isTileOccupied(x, y, boardState) &&
+          !this.isTileOccupied(x, y - pawnDirection, boardState)
+        ) {
+          return true;
         }
-      } else {
-        if (prevX === x && y - prevY === pawnDirection) {
-          if (!this.isTileOccupied(x, y, boardState)) {
-            return true;
-          }
+      } else if (prevX === x && y - prevY === pawnDirection) {
+        if (!this.isTileOccupied(x, y, boardState)) {
+          return true;
         }
       }
     }
