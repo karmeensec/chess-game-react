@@ -300,7 +300,7 @@ const Chessboard = () => {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
+            if (gridX === piece.x && gridY === piece.y) {
               piece.x = x;
               piece.y = y;
               results.push(piece);
@@ -312,22 +312,6 @@ const Chessboard = () => {
           }, [] as Piece[]);
 
           setPieces(updatedPieces);
-
-          // setPieces((value) => {
-          //   const pieces = value.reduce((results, piece) => {
-          //     if (currentPiece.x === piece.x && currentPiece.y === piece.y) {
-          //       piece.x = x;
-          //       piece.y = y;
-          //       results.push(piece);
-          //     } else if (!(piece.x === x && piece.y === y)) {
-          //       results.push(piece);
-          //     }
-
-          //     return results;
-          //   }, [] as Piece[]);
-
-          //   return pieces;
-          // });
         } else {
           activePiece.style.position = "relative";
           activePiece.style.removeProperty("top");
