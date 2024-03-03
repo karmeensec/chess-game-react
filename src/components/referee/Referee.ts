@@ -91,6 +91,16 @@ export default class Referee {
 
           if (desiredPosition.x - initialPosition.x === 2 * i) {
             if (desiredPosition.y - initialPosition.y === j) {
+              if (
+                this.isTileEmptyOrOccupiedByEnemy(
+                  desiredPosition,
+                  boardState,
+                  team
+                )
+              ) {
+                return true;
+              }
+
               console.log("Bottom/Top right/Left knights movement");
             }
           }
