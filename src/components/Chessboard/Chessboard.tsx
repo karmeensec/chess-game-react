@@ -24,6 +24,7 @@ import {
   teamTypes,
   VERTICAL_AXIS,
   GRID_SIZE,
+  samePosition,
 } from "../../constants.ts";
 
 // Pawns
@@ -316,9 +317,8 @@ const Chessboard = () => {
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE)
       );
 
-      const currentPiece = pieces.find(
-        (p) =>
-          p.position.x === grabPosition.x && p.position.y === grabPosition.y
+      const currentPiece = pieces.find((p) =>
+        samePosition(p.position, grabPosition)
       );
 
       if (currentPiece) {
@@ -346,18 +346,13 @@ const Chessboard = () => {
 
         if (enPassantMove) {
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (
-              grabPosition.x === piece.position.x &&
-              grabPosition.y === piece.position.y
-            ) {
+            if (samePosition(piece.position, grabPosition)) {
               piece.enPassant === false;
               piece.position.x = x;
               piece.position.y = y;
               results.push(piece);
             } else if (
-              !(
-                piece.position.x === x && piece.position.y === y - pawnDirection
-              )
+              !samePosition(piece.position, { x, y: y - pawnDirection })
             ) {
               if (piece.type === PieceType.PAWN) {
                 piece.enPassant === false;
@@ -374,10 +369,7 @@ const Chessboard = () => {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (
-              grabPosition.x === piece.position.x &&
-              grabPosition.y === piece.position.y
-            ) {
+            if (samePosition(piece.position, grabPosition)) {
               if (
                 Math.abs(grabPosition.y - y) === 2 &&
                 piece.type === PieceType.PAWN
@@ -390,7 +382,7 @@ const Chessboard = () => {
               piece.position.x = x;
               piece.position.y = y;
               results.push(piece);
-            } else if (!(piece.position.x === x && piece.position.y === y)) {
+            } else if (!samePosition(piece.position, { x, y })) {
               if (piece.type === PieceType.PAWN) {
                 piece.enPassant === false;
               }
@@ -418,8 +410,8 @@ const Chessboard = () => {
       const startZero = 2;
       const number = i + j + startZero;
 
-      const piece = pieces.find(
-        (p) => p.position.x === i && p.position.y === j
+      const piece = pieces.find((p) =>
+        samePosition(p.position, { x: i, y: j })
       );
 
       const image = piece ? piece.image : "";
