@@ -1,4 +1,4 @@
-import { Piece, PieceType, TeamType } from "../Chessboard/Chessboard";
+import { Piece, PieceType, TeamType } from "../../constants";
 
 export default class Referee {
   isValidMove(

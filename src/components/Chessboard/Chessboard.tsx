@@ -14,36 +14,15 @@ import blackKing from "../../assets/images/king (1).png";
 import whiteKing from "../../assets/images/king.png";
 import { useRef, useState } from "react";
 import Referee from "../referee/Referee.ts";
-
-const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
-const verticalAxis = ["1", " 2", " 3", " 4", " 5", "6", " 7", " 8"];
-
-export interface Piece {
-  image: string;
-  x: number;
-  y: number;
-  type: PieceType;
-  team: TeamType;
-  enPassant?: boolean;
-}
-
-export enum PieceType {
-  PAWN,
-  ROOK,
-  BISHOP,
-  KNIGHT,
-  QUEEN,
-  KING,
-}
-
-export enum TeamType {
-  OPPONENT,
-  MY,
-}
-
-const initialBoardState: Piece[] = [];
-
-const teamTypes = [TeamType.OPPONENT, TeamType.MY];
+import {
+  Piece,
+  PieceType,
+  TeamType,
+  horizontalAxis,
+  initialBoardState,
+  teamTypes,
+  verticalAxis,
+} from "../../constants.ts";
 
 // Pawns
 
