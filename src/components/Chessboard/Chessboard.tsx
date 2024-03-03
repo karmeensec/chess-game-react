@@ -422,13 +422,11 @@ const Chessboard = () => {
       const startZero = 2;
       const number = i + j + startZero;
 
-      let image = "";
+      const piece = pieces.find(
+        (p) => p.position.x === i && p.position.y === j
+      );
 
-      pieces.forEach((piece) => {
-        if (piece.position.x === i && piece.position.y === j) {
-          image = piece.image;
-        }
-      });
+      const image = piece ? piece.image : "";
 
       const key = `${i}-${j}`;
 
