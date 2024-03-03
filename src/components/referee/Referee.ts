@@ -80,6 +80,52 @@ export default class Referee {
       }
     }
 
+    if (type === PieceType.KNIGHT) {
+      // Top Line
+
+      if (desiredPosition.y - initialPosition.y === 2) {
+        if (desiredPosition.x - initialPosition.x === -1) {
+          console.log("Upper left knights movement");
+        }
+        if (desiredPosition.x - initialPosition.x === 1) {
+          console.log("Upper right knights movement");
+        }
+      }
+
+      // Right Line
+
+      if (desiredPosition.x - initialPosition.x === 2) {
+        if (desiredPosition.y - initialPosition.y === -1) {
+          console.log("Bottom right knights movement");
+        }
+        if (desiredPosition.y - initialPosition.y === 1) {
+          console.log("Top right knights movement");
+        }
+      }
+
+      // Bottom Line
+
+      if (desiredPosition.y - initialPosition.y === -2) {
+        if (desiredPosition.x - initialPosition.x === -1) {
+          console.log("Bottom left knights movement");
+        }
+        if (desiredPosition.x - initialPosition.x === 1) {
+          console.log("Bottom right knights movement");
+        }
+      }
+
+      // Left Line
+
+      if (desiredPosition.x - initialPosition.x === -2) {
+        if (desiredPosition.y - initialPosition.y === -1) {
+          console.log("Bottom left knights movement");
+        }
+        if (desiredPosition.y - initialPosition.y === 1) {
+          console.log("Top left knights movement");
+        }
+      }
+    }
+
     return false;
   }
 
