@@ -29,8 +29,11 @@ import {
 for (let i = 0; i < 8; i++) {
   initialBoardState.push({
     image: blackPawn,
-    x: i,
-    y: 6,
+    position: {
+      x: i,
+      y: 6,
+    },
+
     type: PieceType.PAWN,
     team: teamTypes[i % 2],
   });
@@ -39,8 +42,11 @@ for (let i = 0; i < 8; i++) {
 for (let i = 0; i < 8; i++) {
   initialBoardState.push({
     image: whitePawn,
-    x: i,
-    y: 1,
+    position: {
+      x: i,
+      y: 1,
+    },
+
     type: PieceType.PAWN,
     team: teamTypes[i % 2],
   });
@@ -50,30 +56,42 @@ for (let i = 0; i < 8; i++) {
 
 initialBoardState.push({
   image: blackRook,
-  x: 0,
-  y: 7,
+  position: {
+    x: 0,
+    y: 7,
+  },
+
   type: PieceType.ROOK,
   team: teamTypes[0],
 });
 initialBoardState.push({
   image: blackRook,
-  x: 7,
-  y: 7,
+  position: {
+    x: 7,
+    y: 7,
+  },
+
   type: PieceType.ROOK,
   team: teamTypes[0],
 });
 
 initialBoardState.push({
   image: whiteRook,
-  x: 0,
-  y: 0,
+  position: {
+    x: 0,
+    y: 0,
+  },
+
   type: PieceType.ROOK,
   team: teamTypes[1],
 });
 initialBoardState.push({
   image: whiteRook,
-  x: 7,
-  y: 0,
+  position: {
+    x: 7,
+    y: 0,
+  },
+
   type: PieceType.ROOK,
   team: teamTypes[1],
 });
@@ -82,30 +100,42 @@ initialBoardState.push({
 
 initialBoardState.push({
   image: blackKnight,
-  x: 1,
-  y: 7,
+  position: {
+    x: 1,
+    y: 7,
+  },
+
   type: PieceType.KNIGHT,
   team: teamTypes[0],
 });
 initialBoardState.push({
   image: blackKnight,
-  x: 6,
-  y: 7,
+  position: {
+    x: 6,
+    y: 7,
+  },
+
   type: PieceType.KNIGHT,
   team: teamTypes[0],
 });
 
 initialBoardState.push({
   image: whiteKnight,
-  x: 1,
-  y: 0,
+  position: {
+    x: 1,
+    y: 0,
+  },
+
   type: PieceType.KNIGHT,
   team: teamTypes[1],
 });
 initialBoardState.push({
   image: whiteKnight,
-  x: 6,
-  y: 0,
+  position: {
+    x: 6,
+    y: 0,
+  },
+
   type: PieceType.KNIGHT,
   team: teamTypes[1],
 });
@@ -114,30 +144,42 @@ initialBoardState.push({
 
 initialBoardState.push({
   image: blackBishop,
-  x: 2,
-  y: 7,
+  position: {
+    x: 2,
+    y: 7,
+  },
+
   type: PieceType.BISHOP,
   team: teamTypes[0],
 });
 initialBoardState.push({
   image: blackBishop,
-  x: 5,
-  y: 7,
+  position: {
+    x: 5,
+    y: 7,
+  },
+
   type: PieceType.BISHOP,
   team: teamTypes[0],
 });
 
 initialBoardState.push({
   image: whiteBishop,
-  x: 2,
-  y: 0,
+  position: {
+    x: 2,
+    y: 0,
+  },
+
   type: PieceType.BISHOP,
   team: teamTypes[1],
 });
 initialBoardState.push({
   image: whiteBishop,
-  x: 5,
-  y: 0,
+  position: {
+    x: 5,
+    y: 0,
+  },
+
   type: PieceType.BISHOP,
   team: teamTypes[1],
 });
@@ -146,15 +188,21 @@ initialBoardState.push({
 
 initialBoardState.push({
   image: blackQueen,
-  x: 3,
-  y: 7,
+  position: {
+    x: 3,
+    y: 7,
+  },
+
   type: PieceType.QUEEN,
   team: teamTypes[0],
 });
 initialBoardState.push({
   image: whiteQueen,
-  x: 3,
-  y: 0,
+  position: {
+    x: 3,
+    y: 0,
+  },
+
   type: PieceType.QUEEN,
   team: teamTypes[1],
 });
@@ -163,15 +211,21 @@ initialBoardState.push({
 
 initialBoardState.push({
   image: blackKing,
-  x: 4,
-  y: 7,
+  position: {
+    x: 4,
+    y: 7,
+  },
+
   type: PieceType.KING,
   team: teamTypes[0],
 });
 initialBoardState.push({
   image: whiteKing,
-  x: 4,
-  y: 0,
+  position: {
+    x: 4,
+    y: 0,
+  },
+
   type: PieceType.KING,
   team: teamTypes[1],
 });
@@ -261,9 +315,13 @@ const Chessboard = () => {
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
-      const currentPiece = pieces.find((p) => p.x === gridX && p.y === gridY);
+      const currentPiece = pieces.find(
+        (p) => p.position.x === gridX && p.position.y === gridY
+      );
 
-      const attackedPiece = pieces.find((p) => p.x === x && p.y === y);
+      const attackedPiece = pieces.find(
+        (p) => p.position.x === x && p.position.y === y
+      );
 
       if (currentPiece) {
         const validMove = referee.isValidMove(
@@ -290,12 +348,16 @@ const Chessboard = () => {
 
         if (enPassantMove) {
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (gridX === piece.x && gridY === piece.y) {
+            if (gridX === piece.position.x && gridY === piece.position.y) {
               piece.enPassant === false;
-              piece.x = x;
-              piece.y = y;
+              piece.position.x = x;
+              piece.position.y = y;
               results.push(piece);
-            } else if (!(piece.x === x && piece.y === y - pawnDirection)) {
+            } else if (
+              !(
+                piece.position.x === x && piece.position.y === y - pawnDirection
+              )
+            ) {
               if (piece.type === PieceType.PAWN) {
                 piece.enPassant === false;
               }
@@ -311,17 +373,17 @@ const Chessboard = () => {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (gridX === piece.x && gridY === piece.y) {
+            if (gridX === piece.position.x && gridY === piece.position.y) {
               if (Math.abs(gridY - y) === 2 && piece.type === PieceType.PAWN) {
                 piece.enPassant === true;
               } else {
                 piece.enPassant === false;
               }
 
-              piece.x = x;
-              piece.y = y;
+              piece.position.x = x;
+              piece.position.y = y;
               results.push(piece);
-            } else if (!(piece.x === x && piece.y === y)) {
+            } else if (!(piece.position.x === x && piece.position.y === y)) {
               if (piece.type === PieceType.PAWN) {
                 piece.enPassant === false;
               }
@@ -352,7 +414,7 @@ const Chessboard = () => {
       let image = "";
 
       pieces.forEach((piece) => {
-        if (piece.x === i && piece.y === j) {
+        if (piece.position.x === i && piece.position.y === j) {
           image = piece.image;
         }
       });
