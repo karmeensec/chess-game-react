@@ -17,6 +17,7 @@ import Referee from "../referee/Referee.ts";
 import {
   Piece,
   PieceType,
+  Position,
   TeamType,
   horizontalAxis,
   initialBoardState,
@@ -235,8 +236,8 @@ initialBoardState.push({
 const Chessboard = () => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
 
-  const [gridX, setGridX] = useState(0);
-  const [gridY, setGridY] = useState(0);
+  const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
+
   const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
 
   const board = [];
@@ -250,13 +251,12 @@ const Chessboard = () => {
     const chessboard = chessboardRef.current;
 
     if (element.classList.contains("chess-piece") && chessboard) {
-      const gridX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
-      const gridY = Math.abs(
+      const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+      const grabY = Math.abs(
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
       );
 
-      setGridX(gridX);
-      setGridY(gridY);
+      setGrabPosition({ x: grabX, y: grabY });
 
       const mouseX = e.clientX - 50;
       const mouseY = e.clientY - 50;
@@ -316,7 +316,8 @@ const Chessboard = () => {
       );
 
       const currentPiece = pieces.find(
-        (p) => p.position.x === gridX && p.position.y === gridY
+        (p) =>
+          p.position.x === grabPosition.x && p.position.y === grabPosition?.y
       );
 
       const attackedPiece = pieces.find(
@@ -325,8 +326,8 @@ const Chessboard = () => {
 
       if (currentPiece) {
         const validMove = referee.isValidMove(
-          gridX,
-          gridY,
+          grabPosition.x,
+          grabPosition.y,
           x,
           y,
           currentPiece.type,
@@ -335,8 +336,8 @@ const Chessboard = () => {
         );
 
         const enPassantMove = referee.isEnPassantMove(
-          gridX,
-          gridY,
+          grabPosition.x,
+          grabPosition.y,
           x,
           y,
           currentPiece.type,
@@ -348,7 +349,10 @@ const Chessboard = () => {
 
         if (enPassantMove) {
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (gridX === piece.position.x && gridY === piece.position.y) {
+            if (
+              grabPosition.x === piece.position.x &&
+              grabPosition.y === piece.position.y
+            ) {
               piece.enPassant === false;
               piece.position.x = x;
               piece.position.y = y;
@@ -373,8 +377,14 @@ const Chessboard = () => {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
-            if (gridX === piece.position.x && gridY === piece.position.y) {
-              if (Math.abs(gridY - y) === 2 && piece.type === PieceType.PAWN) {
+            if (
+              grabPosition.x === piece.position.x &&
+              grabPosition.y === piece.position.y
+            ) {
+              if (
+                Math.abs(grabPosition.y - y) === 2 &&
+                piece.type === PieceType.PAWN
+              ) {
                 piece.enPassant === true;
               } else {
                 piece.enPassant === false;
