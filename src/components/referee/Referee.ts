@@ -1,11 +1,9 @@
-import { Piece, PieceType, TeamType } from "../../constants";
+import { Piece, PieceType, Position, TeamType } from "../../constants";
 
 export default class Referee {
   isValidMove(
-    prevX: number,
-    prevY: number,
-    x: number,
-    y: number,
+    initialPosition: Position,
+    desiredPosition: Position,
     type: PieceType,
     team: TeamType,
     boardState: Piece[]
@@ -17,33 +15,66 @@ export default class Referee {
       // Pawn Movement
 
       if (
-        prevX === x &&
-        prevY === specialRow &&
-        y - prevY === 2 * pawnDirection
+        initialPosition.x === desiredPosition.x &&
+        initialPosition.y === specialRow &&
+        desiredPosition.y - initialPosition.y === 2 * pawnDirection
       ) {
         if (
-          !this.isTileOccupied(x, y, boardState) &&
-          !this.isTileOccupied(x, y - pawnDirection, boardState)
+          !this.isTileOccupied(
+            desiredPosition.x,
+            desiredPosition.y,
+            boardState
+          ) &&
+          !this.isTileOccupied(
+            desiredPosition.x,
+            desiredPosition.y - pawnDirection,
+            boardState
+          )
         ) {
           return true;
         }
-      } else if (prevX === x && y - prevY === pawnDirection) {
-        if (!this.isTileOccupied(x, y, boardState)) {
+      } else if (
+        initialPosition.x === desiredPosition.x &&
+        desiredPosition.y - initialPosition.y === pawnDirection
+      ) {
+        if (
+          !this.isTileOccupied(desiredPosition.x, desiredPosition.y, boardState)
+        ) {
           return true;
         }
       }
 
       // Pawn Attacking
-      else if (x - prevX === -1 && y - prevY === pawnDirection) {
+      else if (
+        desiredPosition.x - initialPosition.x === -1 &&
+        desiredPosition.y - initialPosition.y === pawnDirection
+      ) {
         // Upper or Bottom Left Attacking
 
-        if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
+        if (
+          this.isTileOccupiedByEnemy(
+            desiredPosition.x,
+            desiredPosition.y,
+            boardState,
+            team
+          )
+        ) {
           return true;
         }
-      } else if (x - prevX === 1 && y - prevY === pawnDirection) {
+      } else if (
+        desiredPosition.x - initialPosition.x === 1 &&
+        desiredPosition.y - initialPosition.y === pawnDirection
+      ) {
         // Upper or Bottom Right Attacking
 
-        if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
+        if (
+          this.isTileOccupiedByEnemy(
+            desiredPosition.x,
+            desiredPosition.y,
+            boardState,
+            team
+          )
+        ) {
           return true;
         }
       }
@@ -82,10 +113,8 @@ export default class Referee {
   }
 
   isEnPassantMove(
-    prevX: number,
-    prevY: number,
-    x: number,
-    y: number,
+    initialPosition: Position,
+    desiredPosition: Position,
     type: PieceType,
     team: TeamType,
     boardState: Piece[]
@@ -95,13 +124,14 @@ export default class Referee {
     if (type === PieceType.PAWN) {
       // Pawn Attacking
       if (
-        x - prevX === -1 ||
-        (x - prevX === 1 && y - prevY === pawnDirection)
+        desiredPosition.x - initialPosition.x === -1 ||
+        (desiredPosition.x - initialPosition.x === 1 &&
+          desiredPosition.y - initialPosition.y === pawnDirection)
       ) {
         const piece = boardState.find(
           (p) =>
-            p.position.x === x &&
-            p.position.y === y - pawnDirection &&
+            p.position.x === desiredPosition.x &&
+            p.position.y === desiredPosition.y - pawnDirection &&
             p.enPassant
         );
 
