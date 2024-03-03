@@ -19,10 +19,11 @@ import {
   PieceType,
   Position,
   TeamType,
-  horizontalAxis,
+  HORIZONTAL_AXIS,
   initialBoardState,
   teamTypes,
-  verticalAxis,
+  VERTICAL_AXIS,
+  GRID_SIZE,
 } from "../../constants.ts";
 
 // Pawns
@@ -251,15 +252,15 @@ const Chessboard = () => {
     const chessboard = chessboardRef.current;
 
     if (element.classList.contains("chess-piece") && chessboard) {
-      const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+      const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
       const grabY = Math.abs(
-        Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)
+        Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE)
       );
 
       setGrabPosition({ x: grabX, y: grabY });
 
-      const mouseX = e.clientX - 50;
-      const mouseY = e.clientY - 50;
+      const mouseX = e.clientX - GRID_SIZE / 2;
+      const mouseY = e.clientY - GRID_SIZE / 2;
 
       element.style.position = "absolute";
 
@@ -416,8 +417,8 @@ const Chessboard = () => {
     }
   };
 
-  for (let j = verticalAxis.length - 1; j >= 0; j--) {
-    for (let i = 0; i < horizontalAxis.length; i++) {
+  for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
+    for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
       const startZero = 2;
       const number = i + j + startZero;
 
