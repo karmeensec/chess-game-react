@@ -1,4 +1,10 @@
-import { Piece, PieceType, Position, TeamType } from "../../constants";
+import {
+  Piece,
+  PieceType,
+  Position,
+  TeamType,
+  samePosition,
+} from "../../constants";
 
 export default class Referee {
   isValidMove(
@@ -20,61 +26,42 @@ export default class Referee {
         desiredPosition.y - initialPosition.y === 2 * pawnDirection
       ) {
         if (
+          !this.isTileOccupied(desiredPosition, boardState) &&
           !this.isTileOccupied(
-            desiredPosition.x,
-            desiredPosition.y,
-            boardState
-          ) &&
-          !this.isTileOccupied(
-            desiredPosition.x,
-            desiredPosition.y - pawnDirection,
+            { x: desiredPosition.x, y: desiredPosition.y - pawnDirection },
             boardState
           )
         ) {
           return true;
         }
-      } else if (
+      }
+      if (
         initialPosition.x === desiredPosition.x &&
         desiredPosition.y - initialPosition.y === pawnDirection
       ) {
-        if (
-          !this.isTileOccupied(desiredPosition.x, desiredPosition.y, boardState)
-        ) {
+        if (!this.isTileOccupied(desiredPosition, boardState)) {
           return true;
         }
       }
 
       // Pawn Attacking
-      else if (
+      if (
         desiredPosition.x - initialPosition.x === -1 &&
         desiredPosition.y - initialPosition.y === pawnDirection
       ) {
         // Upper or Bottom Left Attacking
 
-        if (
-          this.isTileOccupiedByEnemy(
-            desiredPosition.x,
-            desiredPosition.y,
-            boardState,
-            team
-          )
-        ) {
+        if (this.isTileOccupiedByEnemy(desiredPosition, boardState, team)) {
           return true;
         }
-      } else if (
+      }
+      if (
         desiredPosition.x - initialPosition.x === 1 &&
         desiredPosition.y - initialPosition.y === pawnDirection
       ) {
         // Upper or Bottom Right Attacking
 
-        if (
-          this.isTileOccupiedByEnemy(
-            desiredPosition.x,
-            desiredPosition.y,
-            boardState,
-            team
-          )
-        ) {
+        if (this.isTileOccupiedByEnemy(desiredPosition, boardState, team)) {
           return true;
         }
       }
@@ -87,6 +74,15 @@ export default class Referee {
 
           if (desiredPosition.y - initialPosition.y === 2 * i) {
             if (desiredPosition.x - initialPosition.x === j) {
+              if (
+                this.isTileEmptyOrOccupiedByEnemy(
+                  desiredPosition,
+                  boardState,
+                  team
+                )
+              ) {
+                return true;
+              }
               console.log("Upper/Bottom left/right knights movement");
             }
           }
@@ -105,10 +101,8 @@ export default class Referee {
     return false;
   }
 
-  isTileOccupied(x: number, y: number, boardState: Piece[]): boolean {
-    const piece = boardState.find(
-      (p) => p.position.x === x && p.position.y === y
-    );
+  isTileOccupied(position: Position, boardState: Piece[]): boolean {
+    const piece = boardState.find((p) => samePosition(p.position, position));
 
     if (piece) {
       return true;
@@ -118,13 +112,12 @@ export default class Referee {
   }
 
   isTileOccupiedByEnemy(
-    x: number,
-    y: number,
+    position: Position,
     boardState: Piece[],
     team: TeamType
   ): boolean {
     const piece = boardState.find(
-      (p) => p.position.x === x && p.position.y === y && p.team !== team
+      (p) => samePosition(p.position, position) && p.team !== team
     );
 
     if (piece) {
@@ -132,6 +125,17 @@ export default class Referee {
     } else {
       return false;
     }
+  }
+
+  isTileEmptyOrOccupiedByEnemy(
+    position: Position,
+    boardState: Piece[],
+    team: TeamType
+  ): boolean {
+    return (
+      !this.isTileOccupied(position, boardState) ||
+      this.isTileOccupiedByEnemy(position, boardState, team)
+    );
   }
 
   isEnPassantMove(
