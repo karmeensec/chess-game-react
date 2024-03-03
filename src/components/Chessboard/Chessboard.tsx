@@ -323,20 +323,16 @@ const Chessboard = () => {
 
       if (currentPiece) {
         const validMove = referee.isValidMove(
-          grabPosition.x,
-          grabPosition.y,
-          x,
-          y,
+          grabPosition,
+          { x, y },
           currentPiece.type,
           currentPiece.team,
           pieces
         );
 
         const enPassantMove = referee.isEnPassantMove(
-          grabPosition.x,
-          grabPosition.y,
-          x,
-          y,
+          grabPosition,
+          { x, y },
           currentPiece.type,
           currentPiece.team,
           pieces
