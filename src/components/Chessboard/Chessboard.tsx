@@ -361,7 +361,9 @@ const Chessboard = () => {
           }, [] as Piece[]);
 
           setPieces(updatedPieces);
-        } else if (validMove) {
+        }
+
+        if (validMove) {
           // Update the piece position
 
           const updatedPieces = pieces.reduce((results, piece) => {
