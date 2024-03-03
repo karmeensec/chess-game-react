@@ -82,25 +82,21 @@ export default class Referee {
 
     if (type === PieceType.KNIGHT) {
       for (let i = -1; i < 2; i += 2) {
-        // Top/Bottom Line
+        for (let j = -1; j < 2; j += 2) {
+          // Top/Bottom Side
 
-        if (desiredPosition.y - initialPosition.y === 2 * i) {
-          if (desiredPosition.x - initialPosition.x === -1) {
-            console.log("Upper/Bottom left knights movement");
+          if (desiredPosition.y - initialPosition.y === 2 * i) {
+            if (desiredPosition.x - initialPosition.x === j) {
+              console.log("Upper/Bottom left/right knights movement");
+            }
           }
-          if (desiredPosition.x - initialPosition.x === 1) {
-            console.log("Upper/Bottom right knights movement");
-          }
-        }
 
-        // Right/Left Line
+          // Right/Left Side
 
-        if (desiredPosition.x - initialPosition.x === 2 * i) {
-          if (desiredPosition.y - initialPosition.y === -1) {
-            console.log("Bottom right/Left knights movement");
-          }
-          if (desiredPosition.y - initialPosition.y === 1) {
-            console.log("Top right/left knights movement");
+          if (desiredPosition.x - initialPosition.x === 2 * i) {
+            if (desiredPosition.y - initialPosition.y === j) {
+              console.log("Bottom/Top right/Left knights movement");
+            }
           }
         }
       }
