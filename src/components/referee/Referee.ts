@@ -10,12 +10,6 @@ export default class Referee {
     team: TeamType,
     boardState: Piece[]
   ): boolean {
-    console.log("Referee is checking....");
-    console.log("Current piece location: ", x, y);
-    console.log("Previous piece location: ", prevX, prevY);
-    console.log("Piece type: ", type);
-    console.log("Team type: ", team);
-
     if (type === PieceType.PAWN) {
       const specialRow = team === TeamType.MY ? 1 : 6;
       const pawnDirection = team === TeamType.MY ? 1 : -1;
@@ -43,15 +37,11 @@ export default class Referee {
       else if (x - prevX === -1 && y - prevY === pawnDirection) {
         // Upper or Bottom Left Attacking
 
-        console.log("Upper / Bottom Left");
-
         if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
           return true;
         }
       } else if (x - prevX === 1 && y - prevY === pawnDirection) {
         // Upper or Bottom Right Attacking
-
-        console.log("Upper / Bottom Right");
 
         if (this.isTileOccupiedByEnemy(x, y, boardState, team)) {
           return true;
@@ -63,8 +53,6 @@ export default class Referee {
   }
 
   isTileOccupied(x: number, y: number, boardState: Piece[]): boolean {
-    console.log("Check if tile is occupied");
-
     const piece = boardState.find(
       (p) => p.position.x === x && p.position.y === y
     );
