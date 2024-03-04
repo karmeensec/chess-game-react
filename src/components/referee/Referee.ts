@@ -120,32 +120,23 @@ export default class Referee {
             y: initialPosition.y + i,
           };
 
-          console.log(
-            `Passed Position: ${passedPosition.x}, ${passedPosition.y}`
-          );
-          console.log(
-            `Desired Position: ${desiredPosition.x}, ${desiredPosition.y}`
-          );
-
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            if (
-              this.isTileOccupiedByEnemy(passedPosition, boardState, team) &&
-              passedPosition.x === desiredPosition.x &&
-              passedPosition.y === desiredPosition.y
-            ) {
-              console.log("Advance and attack");
-            } else {
-              console.log("Illegal move");
-              break;
-            }
-          }
-
           if (
             passedPosition.x === desiredPosition.x &&
             passedPosition.y === desiredPosition.y
           ) {
-            console.log("Same position");
-            return true;
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
         }
 
