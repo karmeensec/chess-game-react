@@ -136,31 +136,71 @@ export default class Referee {
         // Bottom Right Movement
 
         if (
+          desiredPosition.x > initialPosition.x &&
+          desiredPosition.y < initialPosition.y
+        ) {
+          const passedTile: Position = {
+            x: initialPosition.x + i,
+            y: initialPosition.y - i,
+          };
+
+          if (this.isTileOccupied(passedTile, boardState)) {
+            console.log("Illegal move");
+            break;
+          }
+        }
+        if (
           desiredPosition.x - initialPosition.x === i &&
           desiredPosition.y - initialPosition.y === -i
         ) {
-          console.log(`Moving BOTTOM RIGHT ${i} tiles`);
-          break;
+          return true;
         }
 
         // Bottom Left Movement
 
         if (
+          desiredPosition.x < initialPosition.x &&
+          desiredPosition.y < initialPosition.y
+        ) {
+          const passedTile: Position = {
+            x: initialPosition.x + i,
+            y: initialPosition.y - i,
+          };
+
+          if (this.isTileOccupied(passedTile, boardState)) {
+            console.log("Illegal move");
+            break;
+          }
+        }
+
+        if (
           desiredPosition.x - initialPosition.x === -i &&
           desiredPosition.y - initialPosition.y === -i
         ) {
-          console.log(`Moving BOTTOM LEFT ${i} tiles`);
-          break;
+          return true;
         }
 
         // Upper Left Movement
 
         if (
+          desiredPosition.x < initialPosition.x &&
+          desiredPosition.y > initialPosition.y
+        ) {
+          const passedTile: Position = {
+            x: initialPosition.x + i,
+            y: initialPosition.y - i,
+          };
+
+          if (this.isTileOccupied(passedTile, boardState)) {
+            console.log("Illegal move");
+            break;
+          }
+        }
+        if (
           desiredPosition.x - initialPosition.x === -i &&
           desiredPosition.y - initialPosition.y === i
         ) {
-          console.log(`Moving UPPER LEFT ${i} tiles`);
-          break;
+          return true;
         }
       }
     }
