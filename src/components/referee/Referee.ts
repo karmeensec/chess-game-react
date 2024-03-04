@@ -109,9 +109,9 @@ export default class Referee {
     }
 
     if (type === PieceType.BISHOP) {
-      // Upper Right Movement
-
       for (let i = 1; i < 8; i++) {
+        // Upper Right Movement
+
         console.log("Looping through neighbors");
         if (
           desiredPosition.x - initialPosition.x === i &&
@@ -120,12 +120,9 @@ export default class Referee {
           console.log(`Moving UP RIGHT ${i} tiles`);
           break;
         }
-      }
 
-      // Bottom Right Movement
+        // Bottom Right Movement
 
-      for (let i = 1; i < 8; i++) {
-        console.log("Looping through neighbors");
         if (
           desiredPosition.x - initialPosition.x === i &&
           desiredPosition.y - initialPosition.y === -i
@@ -133,12 +130,9 @@ export default class Referee {
           console.log(`Moving BOTTOM RIGHT ${i} tiles`);
           break;
         }
-      }
 
-      // Bottom Left Movement
+        // Bottom Left Movement
 
-      for (let i = 1; i < 8; i++) {
-        console.log("Looping through neighbors");
         if (
           desiredPosition.x - initialPosition.x === -i &&
           desiredPosition.y - initialPosition.y === -i
@@ -146,12 +140,9 @@ export default class Referee {
           console.log(`Moving BOTTOM LEFT ${i} tiles`);
           break;
         }
-      }
 
-      // Upper Left Movement
+        // Upper Left Movement
 
-      for (let i = 1; i < 8; i++) {
-        console.log("Looping through neighbors");
         if (
           desiredPosition.x - initialPosition.x === -i &&
           desiredPosition.y - initialPosition.y === i
