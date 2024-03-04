@@ -7,6 +7,13 @@ import {
 } from "../../constants";
 
 export default class Referee {
+  pawnMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ) {}
+
   isValidMove(
     initialPosition: Position,
     desiredPosition: Position,
@@ -14,6 +21,24 @@ export default class Referee {
     team: TeamType,
     boardState: Piece[]
   ): boolean {
+    switch (type) {
+      case PieceType.PAWN:
+        console.log("Pawn");
+        break;
+
+      case PieceType.KNIGHT:
+        console.log("Knight");
+        break;
+
+      case PieceType.BISHOP:
+        console.log("Bishop");
+        break;
+
+      case PieceType.ROOK:
+        console.log("Rook");
+        break;
+    }
+
     if (type === PieceType.PAWN) {
       const specialRow = team === TeamType.MY ? 1 : 6;
       const pawnDirection = team === TeamType.MY ? 1 : -1;
