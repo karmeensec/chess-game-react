@@ -115,6 +115,124 @@ export default class Referee {
     return false;
   }
 
+  bishopMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
+    for (let i = 1; i < 8; i++) {
+      // Upper Right Movement
+      if (
+        desiredPosition.x > initialPosition.x &&
+        desiredPosition.y > initialPosition.y
+      ) {
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y + i,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+
+      // Bottom Right Movement
+
+      if (
+        desiredPosition.x > initialPosition.x &&
+        desiredPosition.y < initialPosition.y
+      ) {
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y - i,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+
+      // Bottom Left Movement
+
+      if (
+        desiredPosition.x < initialPosition.x &&
+        desiredPosition.y < initialPosition.y
+      ) {
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y - i,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+
+      // Upper Left Movement
+
+      if (
+        desiredPosition.x < initialPosition.x &&
+        desiredPosition.y > initialPosition.y
+      ) {
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y - i,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
   isValidMove(
     initialPosition: Position,
     desiredPosition: Position,
@@ -144,7 +262,12 @@ export default class Referee {
         break;
 
       case PieceType.BISHOP:
-        console.log("Bishop");
+        validMode = this.bishopMovement(
+          initialPosition,
+          desiredPosition,
+          team,
+          boardState
+        );
         break;
 
       case PieceType.ROOK:
