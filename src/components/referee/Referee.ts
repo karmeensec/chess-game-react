@@ -241,45 +241,22 @@ export default class Referee {
       if (initialPosition.x === desiredPosition.x) {
         console.log("Moving vertical");
 
-        if (desiredPosition.y < initialPosition.y) {
-          console.log("Down");
+        for (let i = 1; i < 8; i++) {
+          const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
 
-          for (let i = 1; i < 8; i++) {
-            const passedPosition: Position = {
-              x: initialPosition.x,
-              y: initialPosition.y - i,
-            };
+          const passedPosition: Position = {
+            x: initialPosition.x,
+            y: initialPosition.y + i * multiplier,
+          };
 
-            console.log(passedPosition);
+          console.log(passedPosition);
 
-            if (
-              passedPosition.x === desiredPosition.x &&
-              passedPosition.y === desiredPosition.y
-            ) {
-              console.log("Arrived");
-              break;
-            }
-          }
-        }
-
-        if (desiredPosition.y > initialPosition.y) {
-          console.log("Up");
-
-          for (let i = 1; i < 8; i++) {
-            const passedPosition: Position = {
-              x: initialPosition.x,
-              y: initialPosition.y + i,
-            };
-
-            console.log(passedPosition);
-
-            if (
-              passedPosition.x === desiredPosition.x &&
-              passedPosition.y === desiredPosition.y
-            ) {
-              console.log("Arrived");
-              break;
-            }
+          if (
+            passedPosition.x === desiredPosition.x &&
+            passedPosition.y === desiredPosition.y
+          ) {
+            console.log("Arrived");
+            break;
           }
         }
       }
