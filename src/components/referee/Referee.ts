@@ -253,8 +253,19 @@ export default class Referee {
             passedPosition.x === desiredPosition.x &&
             passedPosition.y === desiredPosition.y
           ) {
-            console.log("Arrived");
-            break;
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
         }
       }
@@ -276,8 +287,19 @@ export default class Referee {
             passedPosition.x === desiredPosition.x &&
             passedPosition.y === desiredPosition.y
           ) {
-            console.log("Arrived");
-            break;
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
         }
       }
