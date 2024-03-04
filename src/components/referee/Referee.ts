@@ -115,22 +115,30 @@ export default class Referee {
           desiredPosition.x > initialPosition.x &&
           desiredPosition.y > initialPosition.y
         ) {
-          const passedTile: Position = {
+          const passedPosition: Position = {
             x: initialPosition.x + i,
             y: initialPosition.y + i,
           };
 
-          if (this.isTileOccupied(passedTile, boardState)) {
+          console.log(
+            `Passed Position: ${passedPosition.x}, ${passedPosition.y}`
+          );
+          console.log(
+            `Desired Position: ${desiredPosition.x}, ${desiredPosition.y}`
+          );
+
+          if (this.isTileOccupied(passedPosition, boardState)) {
             console.log("Illegal move");
             break;
           }
-        }
 
-        if (
-          desiredPosition.x - initialPosition.x === i &&
-          desiredPosition.y - initialPosition.y === i
-        ) {
-          return true;
+          if (
+            passedPosition.x === desiredPosition.x &&
+            passedPosition.y === desiredPosition.y
+          ) {
+            console.log("Same position");
+            return true;
+          }
         }
 
         // Bottom Right Movement
@@ -139,12 +147,12 @@ export default class Referee {
           desiredPosition.x > initialPosition.x &&
           desiredPosition.y < initialPosition.y
         ) {
-          const passedTile: Position = {
+          const passedPosition: Position = {
             x: initialPosition.x + i,
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedTile, boardState)) {
+          if (this.isTileOccupied(passedPosition, boardState)) {
             console.log("Illegal move");
             break;
           }
@@ -162,12 +170,12 @@ export default class Referee {
           desiredPosition.x < initialPosition.x &&
           desiredPosition.y < initialPosition.y
         ) {
-          const passedTile: Position = {
+          const passedPosition: Position = {
             x: initialPosition.x + i,
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedTile, boardState)) {
+          if (this.isTileOccupied(passedPosition, boardState)) {
             console.log("Illegal move");
             break;
           }
@@ -186,12 +194,12 @@ export default class Referee {
           desiredPosition.x < initialPosition.x &&
           desiredPosition.y > initialPosition.y
         ) {
-          const passedTile: Position = {
+          const passedPosition: Position = {
             x: initialPosition.x + i,
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedTile, boardState)) {
+          if (this.isTileOccupied(passedPosition, boardState)) {
             console.log("Illegal move");
             break;
           }
