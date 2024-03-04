@@ -151,16 +151,24 @@ export default class Referee {
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            console.log("Illegal move");
-            break;
+          if (
+            passedPosition.x === desiredPosition.x &&
+            passedPosition.y === desiredPosition.y
+          ) {
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
-        }
-        if (
-          desiredPosition.x - initialPosition.x === i &&
-          desiredPosition.y - initialPosition.y === -i
-        ) {
-          return true;
         }
 
         // Bottom Left Movement
@@ -174,17 +182,24 @@ export default class Referee {
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            console.log("Illegal move");
-            break;
+          if (
+            passedPosition.x === desiredPosition.x &&
+            passedPosition.y === desiredPosition.y
+          ) {
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
-        }
-
-        if (
-          desiredPosition.x - initialPosition.x === -i &&
-          desiredPosition.y - initialPosition.y === -i
-        ) {
-          return true;
         }
 
         // Upper Left Movement
@@ -198,16 +213,24 @@ export default class Referee {
             y: initialPosition.y - i,
           };
 
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            console.log("Illegal move");
-            break;
+          if (
+            passedPosition.x === desiredPosition.x &&
+            passedPosition.y === desiredPosition.y
+          ) {
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                passedPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+          } else {
+            if (this.isTileOccupied(passedPosition, boardState)) {
+              break;
+            }
           }
-        }
-        if (
-          desiredPosition.x - initialPosition.x === -i &&
-          desiredPosition.y - initialPosition.y === i
-        ) {
-          return true;
         }
       }
     }
