@@ -233,6 +233,75 @@ export default class Referee {
     return false;
   }
 
+  rookMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
+    console.log("Rook");
+
+    if (initialPosition.x === desiredPosition.x) {
+      console.log("Moving vertical");
+
+      for (let i = 1; i < 8; i++) {
+        const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
+
+        const passedPosition: Position = {
+          x: initialPosition.x,
+          y: initialPosition.y + i * multiplier,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+    }
+
+    if (initialPosition.y === desiredPosition.y) {
+      console.log("Moving horizontal");
+
+      for (let i = 1; i < 8; i++) {
+        const multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
+
+        const passedPosition: Position = {
+          x: initialPosition.x + i * multiplier,
+          y: initialPosition.y,
+        };
+
+        console.log(passedPosition);
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
   isValidMove(
     initialPosition: Position,
     desiredPosition: Position,
@@ -240,11 +309,11 @@ export default class Referee {
     team: TeamType,
     boardState: Piece[]
   ): boolean {
-    let validMode = false;
+    let validMove = false;
 
     switch (type) {
       case PieceType.PAWN:
-        validMode = this.pawnMovement(
+        validMove = this.pawnMovement(
           initialPosition,
           desiredPosition,
           team,
@@ -253,7 +322,7 @@ export default class Referee {
         break;
 
       case PieceType.KNIGHT:
-        validMode = this.knightMovement(
+        validMove = this.knightMovement(
           initialPosition,
           desiredPosition,
           team,
@@ -262,7 +331,7 @@ export default class Referee {
         break;
 
       case PieceType.BISHOP:
-        validMode = this.bishopMovement(
+        validMove = this.bishopMovement(
           initialPosition,
           desiredPosition,
           team,
@@ -271,210 +340,16 @@ export default class Referee {
         break;
 
       case PieceType.ROOK:
-        console.log("Rook");
+        validMove = this.rookMovement(
+          initialPosition,
+          desiredPosition,
+          team,
+          boardState
+        );
         break;
     }
 
-    return validMode;
-
-    if (type === PieceType.BISHOP) {
-      for (let i = 1; i < 8; i++) {
-        // Upper Right Movement
-        if (
-          desiredPosition.x > initialPosition.x &&
-          desiredPosition.y > initialPosition.y
-        ) {
-          const passedPosition: Position = {
-            x: initialPosition.x + i,
-            y: initialPosition.y + i,
-          };
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-
-        // Bottom Right Movement
-
-        if (
-          desiredPosition.x > initialPosition.x &&
-          desiredPosition.y < initialPosition.y
-        ) {
-          const passedPosition: Position = {
-            x: initialPosition.x + i,
-            y: initialPosition.y - i,
-          };
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-
-        // Bottom Left Movement
-
-        if (
-          desiredPosition.x < initialPosition.x &&
-          desiredPosition.y < initialPosition.y
-        ) {
-          const passedPosition: Position = {
-            x: initialPosition.x + i,
-            y: initialPosition.y - i,
-          };
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-
-        // Upper Left Movement
-
-        if (
-          desiredPosition.x < initialPosition.x &&
-          desiredPosition.y > initialPosition.y
-        ) {
-          const passedPosition: Position = {
-            x: initialPosition.x + i,
-            y: initialPosition.y - i,
-          };
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    if (type === PieceType.ROOK) {
-      console.log("Rook");
-
-      if (initialPosition.x === desiredPosition.x) {
-        console.log("Moving vertical");
-
-        for (let i = 1; i < 8; i++) {
-          const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
-
-          const passedPosition: Position = {
-            x: initialPosition.x,
-            y: initialPosition.y + i * multiplier,
-          };
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-      }
-
-      if (initialPosition.y === desiredPosition.y) {
-        console.log("Moving horizontal");
-
-        for (let i = 1; i < 8; i++) {
-          const multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
-
-          const passedPosition: Position = {
-            x: initialPosition.x + i * multiplier,
-            y: initialPosition.y,
-          };
-
-          console.log(passedPosition);
-
-          if (
-            passedPosition.x === desiredPosition.x &&
-            passedPosition.y === desiredPosition.y
-          ) {
-            if (
-              this.isTileEmptyOrOccupiedByEnemy(
-                passedPosition,
-                boardState,
-                team
-              )
-            ) {
-              return true;
-            }
-          } else {
-            if (this.isTileOccupied(passedPosition, boardState)) {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    return false;
+    return validMove;
   }
 
   isTileOccupied(position: Position, boardState: Piece[]): boolean {
