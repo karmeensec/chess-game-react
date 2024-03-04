@@ -128,8 +128,16 @@ export default class Referee {
           );
 
           if (this.isTileOccupied(passedPosition, boardState)) {
-            console.log("Illegal move");
-            break;
+            if (
+              this.isTileOccupiedByEnemy(passedPosition, boardState, team) &&
+              passedPosition.x === desiredPosition.x &&
+              passedPosition.y === desiredPosition.y
+            ) {
+              console.log("Advance and attack");
+            } else {
+              console.log("Illegal move");
+              break;
+            }
           }
 
           if (
