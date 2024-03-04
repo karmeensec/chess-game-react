@@ -111,14 +111,26 @@ export default class Referee {
     if (type === PieceType.BISHOP) {
       for (let i = 1; i < 8; i++) {
         // Upper Right Movement
+        if (
+          desiredPosition.x > initialPosition.x &&
+          desiredPosition.y > initialPosition.y
+        ) {
+          const passedTile: Position = {
+            x: initialPosition.x + i,
+            y: initialPosition.y + i,
+          };
 
-        console.log("Looping through neighbors");
+          if (this.isTileOccupied(passedTile, boardState)) {
+            console.log("Illegal move");
+            break;
+          }
+        }
+
         if (
           desiredPosition.x - initialPosition.x === i &&
           desiredPosition.y - initialPosition.y === i
         ) {
-          console.log(`Moving UP RIGHT ${i} tiles`);
-          break;
+          return true;
         }
 
         // Bottom Right Movement
