@@ -67,6 +67,54 @@ export default class Referee {
     return false;
   }
 
+  knightMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
+    for (let i = -1; i < 2; i += 2) {
+      for (let j = -1; j < 2; j += 2) {
+        // Top/Bottom Side
+
+        if (desiredPosition.y - initialPosition.y === 2 * i) {
+          if (desiredPosition.x - initialPosition.x === j) {
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                desiredPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+            console.log("Upper/Bottom left/right knights movement");
+          }
+        }
+
+        // Right/Left Side
+
+        if (desiredPosition.x - initialPosition.x === 2 * i) {
+          if (desiredPosition.y - initialPosition.y === j) {
+            if (
+              this.isTileEmptyOrOccupiedByEnemy(
+                desiredPosition,
+                boardState,
+                team
+              )
+            ) {
+              return true;
+            }
+
+            console.log("Bottom/Top right/Left knights movement");
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
   isValidMove(
     initialPosition: Position,
     desiredPosition: Position,
@@ -87,7 +135,12 @@ export default class Referee {
         break;
 
       case PieceType.KNIGHT:
-        console.log("Knight");
+        validMode = this.knightMovement(
+          initialPosition,
+          desiredPosition,
+          team,
+          boardState
+        );
         break;
 
       case PieceType.BISHOP:
@@ -100,47 +153,6 @@ export default class Referee {
     }
 
     return validMode;
-
-    if (type === PieceType.KNIGHT) {
-      for (let i = -1; i < 2; i += 2) {
-        for (let j = -1; j < 2; j += 2) {
-          // Top/Bottom Side
-
-          if (desiredPosition.y - initialPosition.y === 2 * i) {
-            if (desiredPosition.x - initialPosition.x === j) {
-              if (
-                this.isTileEmptyOrOccupiedByEnemy(
-                  desiredPosition,
-                  boardState,
-                  team
-                )
-              ) {
-                return true;
-              }
-              console.log("Upper/Bottom left/right knights movement");
-            }
-          }
-
-          // Right/Left Side
-
-          if (desiredPosition.x - initialPosition.x === 2 * i) {
-            if (desiredPosition.y - initialPosition.y === j) {
-              if (
-                this.isTileEmptyOrOccupiedByEnemy(
-                  desiredPosition,
-                  boardState,
-                  team
-                )
-              ) {
-                return true;
-              }
-
-              console.log("Bottom/Top right/Left knights movement");
-            }
-          }
-        }
-      }
-    }
 
     if (type === PieceType.BISHOP) {
       for (let i = 1; i < 8; i++) {
