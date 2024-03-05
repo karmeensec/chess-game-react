@@ -361,6 +361,23 @@ export default class Referee {
         desiredPosition.y > initialPosition.y &&
         desiredPosition.x > initialPosition.x
       ) {
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y + i,
+        };
+
+        if (samePosition(passedPosition, desiredPosition)) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+
         console.log("Moving top right");
       }
 
