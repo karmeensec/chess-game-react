@@ -88,7 +88,6 @@ export default class Referee {
             ) {
               return true;
             }
-            console.log("Upper/Bottom left/right knights movement");
           }
         }
 
@@ -105,8 +104,6 @@ export default class Referee {
             ) {
               return true;
             }
-
-            console.log("Bottom/Top right/Left knights movement");
           }
         }
       }
@@ -227,11 +224,7 @@ export default class Referee {
     team: TeamType,
     boardState: Piece[]
   ): boolean {
-    console.log("Rook");
-
     if (initialPosition.x === desiredPosition.x) {
-      console.log("Moving vertical");
-
       for (let i = 1; i < 8; i++) {
         const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
 
@@ -255,8 +248,6 @@ export default class Referee {
     }
 
     if (initialPosition.y === desiredPosition.y) {
-      console.log("Moving horizontal");
-
       for (let i = 1; i < 8; i++) {
         const multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
 
@@ -264,8 +255,6 @@ export default class Referee {
           x: initialPosition.x + i * multiplier,
           y: initialPosition.y,
         };
-
-        console.log(passedPosition);
 
         if (samePosition(passedPosition, desiredPosition)) {
           if (
