@@ -318,8 +318,31 @@ export default class Referee {
     }
 
     // Right
+
+    if (
+      desiredPosition.y === initialPosition.y &&
+      desiredPosition.x > initialPosition.x
+    ) {
+      console.log("Moving right");
+    }
+
     // Bottom
+
+    if (
+      desiredPosition.y < initialPosition.y &&
+      desiredPosition.x === initialPosition.x
+    ) {
+      console.log("Moving bottom");
+    }
+
     // Left
+
+    if (
+      desiredPosition.y === initialPosition.y &&
+      desiredPosition.x < initialPosition.x
+    ) {
+      console.log("Moving left");
+    }
 
     return false;
   }
