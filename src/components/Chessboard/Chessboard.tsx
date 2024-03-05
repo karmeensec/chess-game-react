@@ -409,6 +409,10 @@ const Chessboard = () => {
     }
   };
 
+  const promotePawn = () => {
+    console.log("Promotion Pawn");
+  };
+
   for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
     for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
       const startZero = 2;
@@ -429,10 +433,10 @@ const Chessboard = () => {
   return (
     <>
       <div id="pawn-promotion-modal">
-        <img src={whiteRook} />
-        <img src={whiteKnight} />
-        <img src={whiteBishop} />
-        <img src={whiteQueen} />
+        <img src={whiteRook} onClick={() => promotePawn()} />
+        <img src={whiteKnight} onClick={() => promotePawn()} />
+        <img src={whiteBishop} onClick={() => promotePawn()} />
+        <img src={whiteQueen} onClick={() => promotePawn()} />
       </div>
 
       <div
