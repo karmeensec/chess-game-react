@@ -309,15 +309,14 @@ export default class Referee {
     boardState: Piece[]
   ): boolean {
     for (let i = 1; i < 8; i++) {
-      // Top
+      // Top/Bottom
 
-      if (
-        desiredPosition.y > initialPosition.y &&
-        desiredPosition.x === initialPosition.x
-      ) {
+      if (desiredPosition.x === initialPosition.x) {
+        const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
+
         const passedPosition: Position = {
           x: initialPosition.x,
-          y: initialPosition.y + i,
+          y: initialPosition.y + i * multiplier,
         };
 
         if (
@@ -336,68 +335,13 @@ export default class Referee {
         }
       }
 
-      // Right
+      // Right/Left
 
-      if (
-        desiredPosition.y === initialPosition.y &&
-        desiredPosition.x > initialPosition.x
-      ) {
+      if (desiredPosition.y === initialPosition.y) {
+        const multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
+
         const passedPosition: Position = {
-          x: initialPosition.x + i,
-          y: initialPosition.y,
-        };
-
-        if (
-          passedPosition.x === desiredPosition.x &&
-          passedPosition.y === desiredPosition.y
-        ) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
-      // Bottom
-
-      if (
-        desiredPosition.y < initialPosition.y &&
-        desiredPosition.x === initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x,
-          y: initialPosition.y - i,
-        };
-
-        if (
-          passedPosition.x === desiredPosition.x &&
-          passedPosition.y === desiredPosition.y
-        ) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
-      // Left
-
-      if (
-        desiredPosition.y === initialPosition.y &&
-        desiredPosition.x < initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x - i,
+          x: initialPosition.x + i * multiplier,
           y: initialPosition.y,
         };
 
