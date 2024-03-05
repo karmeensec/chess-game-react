@@ -436,10 +436,18 @@ const Chessboard = () => {
   return (
     <>
       <div id="pawn-promotion-modal">
-        <img src={whiteRook} onClick={() => promotePawn(PieceType.ROOK)} />
-        <img src={whiteKnight} onClick={() => promotePawn(PieceType.KNIGHT)} />
-        <img src={whiteBishop} onClick={() => promotePawn(PieceType.BISHOP)} />
-        <img src={whiteQueen} onClick={() => promotePawn(PieceType.QUEEN)} />
+        <div className="modal-body">
+          <img src={whiteRook} onClick={() => promotePawn(PieceType.ROOK)} />
+          <img
+            src={whiteKnight}
+            onClick={() => promotePawn(PieceType.KNIGHT)}
+          />
+          <img
+            src={whiteBishop}
+            onClick={() => promotePawn(PieceType.BISHOP)}
+          />
+          <img src={whiteQueen} onClick={() => promotePawn(PieceType.QUEEN)} />
+        </div>
       </div>
 
       <div
