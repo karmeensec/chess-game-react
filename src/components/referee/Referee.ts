@@ -182,7 +182,7 @@ export default class Referee {
         desiredPosition.y < initialPosition.y
       ) {
         const passedPosition: Position = {
-          x: initialPosition.x + i,
+          x: initialPosition.x - i,
           y: initialPosition.y - i,
         };
 
@@ -209,8 +209,8 @@ export default class Referee {
         desiredPosition.y > initialPosition.y
       ) {
         const passedPosition: Position = {
-          x: initialPosition.x + i,
-          y: initialPosition.y - i,
+          x: initialPosition.x - i,
+          y: initialPosition.y + i,
         };
 
         if (
