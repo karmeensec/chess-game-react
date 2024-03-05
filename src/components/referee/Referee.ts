@@ -311,24 +311,18 @@ export default class Referee {
     for (let i = 1; i < 8; i++) {
       // Diagonal
 
-      let multiplierX; // = desiredPosition.x < initialPosition.x ? -1 : 1;
-      let multiplierY; // = desiredPosition.y < initialPosition.y ? -1 : 1;
-
-      if (desiredPosition.x < initialPosition.x) {
-        multiplierX = -1;
-      } else if (desiredPosition.x > initialPosition.x) {
-        multiplierX = 1;
-      } else {
-        multiplierX = 0;
-      }
-
-      if (desiredPosition.y < initialPosition.y) {
-        multiplierY = -1;
-      } else if (desiredPosition.y > initialPosition.y) {
-        multiplierY = 1;
-      } else {
-        multiplierY = 0;
-      }
+      const multiplierX =
+        desiredPosition.x < initialPosition.x
+          ? -1
+          : desiredPosition.x > initialPosition.x
+          ? 1
+          : 0;
+      const multiplierY =
+        desiredPosition.y < initialPosition.y
+          ? -1
+          : desiredPosition.y > initialPosition.y
+          ? 1
+          : 0;
 
       const passedPosition: Position = {
         x: initialPosition.x + i * multiplierX,
@@ -347,6 +341,15 @@ export default class Referee {
         }
       }
     }
+    return false;
+  }
+
+  kingMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
     return false;
   }
 
@@ -398,6 +401,15 @@ export default class Referee {
 
       case PieceType.QUEEN:
         validMove = this.queenMovement(
+          initialPosition,
+          desiredPosition,
+          team,
+          boardState
+        );
+        break;
+
+      case PieceType.KING:
+        validMove = this.kingMovement(
           initialPosition,
           desiredPosition,
           team,
