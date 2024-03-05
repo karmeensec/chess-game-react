@@ -344,6 +344,42 @@ export default class Referee {
       console.log("Moving left");
     }
 
+    // Top right
+
+    if (
+      desiredPosition.y > initialPosition.y &&
+      desiredPosition.x > initialPosition.x
+    ) {
+      console.log("Moving top right");
+    }
+
+    // Bottom right
+
+    if (
+      desiredPosition.y < initialPosition.y &&
+      desiredPosition.x > initialPosition.x
+    ) {
+      console.log("Moving bottom right");
+    }
+
+    // Bottom left
+
+    if (
+      desiredPosition.y < initialPosition.y &&
+      desiredPosition.x < initialPosition.x
+    ) {
+      console.log("Moving bottom left");
+    }
+
+    // Top left
+
+    if (
+      desiredPosition.y > initialPosition.y &&
+      desiredPosition.x < initialPosition.x
+    ) {
+      console.log("Moving top left");
+    }
+
     return false;
   }
 
