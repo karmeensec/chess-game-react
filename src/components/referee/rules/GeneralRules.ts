@@ -28,3 +28,14 @@ export const isTileOccupiedByEnemy = (
     return false;
   }
 };
+
+export const isTileEmptyOrOccupiedByEnemy = (
+  position: Position,
+  boardState: Piece[],
+  team: TeamType
+): boolean => {
+  return (
+    !isTileOccupied(position, boardState) ||
+    isTileOccupiedByEnemy(position, boardState, team)
+  );
+};
