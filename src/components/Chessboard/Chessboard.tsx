@@ -242,6 +242,8 @@ const Chessboard = () => {
 
   const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
 
+  const [promotionPawn, setPromotionPawn] = useState<Piece>();
+
   const board = [];
 
   const chessboardRef = useRef<HTMLDivElement>(null);
@@ -380,7 +382,7 @@ const Chessboard = () => {
               const promotionRow = piece.team === TeamType.MY ? 7 : 0;
 
               if (y === promotionRow) {
-                console.log("Up for promotion row");
+                setPromotionPawn(piece);
               }
 
               results.push(piece);
@@ -409,8 +411,9 @@ const Chessboard = () => {
     }
   };
 
-  const promotePawn = () => {
-    console.log("Promotion Pawn");
+  const promotePawn = (pieceType: PieceType) => {
+    console.log(`Promotion Pawn into ${pieceType}`);
+    console.log(promotionPawn);
   };
 
   for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
@@ -433,10 +436,10 @@ const Chessboard = () => {
   return (
     <>
       <div id="pawn-promotion-modal">
-        <img src={whiteRook} onClick={() => promotePawn()} />
-        <img src={whiteKnight} onClick={() => promotePawn()} />
-        <img src={whiteBishop} onClick={() => promotePawn()} />
-        <img src={whiteQueen} onClick={() => promotePawn()} />
+        <img src={whiteRook} onClick={() => promotePawn(PieceType.ROOK)} />
+        <img src={whiteKnight} onClick={() => promotePawn(PieceType.KNIGHT)} />
+        <img src={whiteBishop} onClick={() => promotePawn(PieceType.BISHOP)} />
+        <img src={whiteQueen} onClick={() => promotePawn(PieceType.QUEEN)} />
       </div>
 
       <div
