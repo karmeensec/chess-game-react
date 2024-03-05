@@ -1,10 +1,13 @@
 import { Piece, PieceType, Position, TeamType } from "../../constants";
-import { bishopMovement } from "./rules/BishopRules.ts";
-import { kingMovement } from "./rules/KingRules.ts";
-import { knightMovement } from "./rules/KnightRules.ts";
-import { pawnMovement } from "./rules/PawnRules.ts";
-import { queenMovement } from "./rules/QueenRules.ts";
-import { rookMovement } from "./rules/RookRules.ts";
+import {
+  pawnMovement,
+  knightMovement,
+  bishopMovement,
+  rookMovement,
+  queenMovement,
+  kingMovement,
+} from "./rules";
+
 export default class Referee {
   isValidMove(
     initialPosition: Position,
