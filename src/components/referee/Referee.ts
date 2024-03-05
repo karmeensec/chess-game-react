@@ -308,78 +308,97 @@ export default class Referee {
     team: TeamType,
     boardState: Piece[]
   ): boolean {
-    // Top
+    for (let i = 1; i < 8; i++) {
+      // Top
 
-    if (
-      desiredPosition.y > initialPosition.y &&
-      desiredPosition.x === initialPosition.x
-    ) {
-      console.log("Moving up");
+      if (
+        desiredPosition.y > initialPosition.y &&
+        desiredPosition.x === initialPosition.x
+      ) {
+        const passedPosition: Position = {
+          x: initialPosition.x,
+          y: initialPosition.y + i,
+        };
+
+        if (
+          passedPosition.x === desiredPosition.x &&
+          passedPosition.y === desiredPosition.y
+        ) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
+      }
+
+      // Right
+
+      if (
+        desiredPosition.y === initialPosition.y &&
+        desiredPosition.x > initialPosition.x
+      ) {
+        console.log("Moving right");
+      }
+
+      // Bottom
+
+      if (
+        desiredPosition.y < initialPosition.y &&
+        desiredPosition.x === initialPosition.x
+      ) {
+        console.log("Moving bottom");
+      }
+
+      // Left
+
+      if (
+        desiredPosition.y === initialPosition.y &&
+        desiredPosition.x < initialPosition.x
+      ) {
+        console.log("Moving left");
+      }
+
+      // Top right
+
+      if (
+        desiredPosition.y > initialPosition.y &&
+        desiredPosition.x > initialPosition.x
+      ) {
+        console.log("Moving top right");
+      }
+
+      // Bottom right
+
+      if (
+        desiredPosition.y < initialPosition.y &&
+        desiredPosition.x > initialPosition.x
+      ) {
+        console.log("Moving bottom right");
+      }
+
+      // Bottom left
+
+      if (
+        desiredPosition.y < initialPosition.y &&
+        desiredPosition.x < initialPosition.x
+      ) {
+        console.log("Moving bottom left");
+      }
+
+      // Top left
+
+      if (
+        desiredPosition.y > initialPosition.y &&
+        desiredPosition.x < initialPosition.x
+      ) {
+        console.log("Moving top left");
+      }
     }
-
-    // Right
-
-    if (
-      desiredPosition.y === initialPosition.y &&
-      desiredPosition.x > initialPosition.x
-    ) {
-      console.log("Moving right");
-    }
-
-    // Bottom
-
-    if (
-      desiredPosition.y < initialPosition.y &&
-      desiredPosition.x === initialPosition.x
-    ) {
-      console.log("Moving bottom");
-    }
-
-    // Left
-
-    if (
-      desiredPosition.y === initialPosition.y &&
-      desiredPosition.x < initialPosition.x
-    ) {
-      console.log("Moving left");
-    }
-
-    // Top right
-
-    if (
-      desiredPosition.y > initialPosition.y &&
-      desiredPosition.x > initialPosition.x
-    ) {
-      console.log("Moving top right");
-    }
-
-    // Bottom right
-
-    if (
-      desiredPosition.y < initialPosition.y &&
-      desiredPosition.x > initialPosition.x
-    ) {
-      console.log("Moving bottom right");
-    }
-
-    // Bottom left
-
-    if (
-      desiredPosition.y < initialPosition.y &&
-      desiredPosition.x < initialPosition.x
-    ) {
-      console.log("Moving bottom left");
-    }
-
-    // Top left
-
-    if (
-      desiredPosition.y > initialPosition.y &&
-      desiredPosition.x < initialPosition.x
-    ) {
-      console.log("Moving top left");
-    }
-
     return false;
   }
 
