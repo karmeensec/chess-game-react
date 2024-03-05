@@ -355,99 +355,25 @@ export default class Referee {
         }
       }
 
-      // Top right
+      // Diagonal
 
-      if (
-        desiredPosition.y > initialPosition.y &&
-        desiredPosition.x > initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x + i,
-          y: initialPosition.y + i,
-        };
+      const multiplierX = desiredPosition.x < initialPosition.x ? -1 : 1;
+      const multiplierY = desiredPosition.y < initialPosition.y ? -1 : 1;
 
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
+      const passedPosition: Position = {
+        x: initialPosition.x + i * multiplierX,
+        y: initialPosition.y + i * multiplierY,
+      };
+
+      if (samePosition(passedPosition, desiredPosition)) {
+        if (
+          this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+        ) {
+          return true;
         }
-      }
-
-      // Bottom right
-
-      if (
-        desiredPosition.y < initialPosition.y &&
-        desiredPosition.x > initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x + i,
-          y: initialPosition.y - i,
-        };
-
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
-      // Bottom left
-
-      if (
-        desiredPosition.y < initialPosition.y &&
-        desiredPosition.x < initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x - i,
-          y: initialPosition.y - i,
-        };
-
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
-      // Top left
-
-      if (
-        desiredPosition.y > initialPosition.y &&
-        desiredPosition.x < initialPosition.x
-      ) {
-        const passedPosition: Position = {
-          x: initialPosition.x - i,
-          y: initialPosition.y + i,
-        };
-
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
+      } else {
+        if (this.isTileOccupied(passedPosition, boardState)) {
+          break;
         }
       }
     }
