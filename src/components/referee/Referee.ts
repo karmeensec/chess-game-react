@@ -377,8 +377,6 @@ export default class Referee {
             break;
           }
         }
-
-        console.log("Moving top right");
       }
 
       // Bottom right
@@ -387,7 +385,22 @@ export default class Referee {
         desiredPosition.y < initialPosition.y &&
         desiredPosition.x > initialPosition.x
       ) {
-        console.log("Moving bottom right");
+        const passedPosition: Position = {
+          x: initialPosition.x + i,
+          y: initialPosition.y - i,
+        };
+
+        if (samePosition(passedPosition, desiredPosition)) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
       }
 
       // Bottom left
@@ -396,7 +409,22 @@ export default class Referee {
         desiredPosition.y < initialPosition.y &&
         desiredPosition.x < initialPosition.x
       ) {
-        console.log("Moving bottom left");
+        const passedPosition: Position = {
+          x: initialPosition.x - i,
+          y: initialPosition.y - i,
+        };
+
+        if (samePosition(passedPosition, desiredPosition)) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
       }
 
       // Top left
@@ -405,7 +433,22 @@ export default class Referee {
         desiredPosition.y > initialPosition.y &&
         desiredPosition.x < initialPosition.x
       ) {
-        console.log("Moving top left");
+        const passedPosition: Position = {
+          x: initialPosition.x - i,
+          y: initialPosition.y + i,
+        };
+
+        if (samePosition(passedPosition, desiredPosition)) {
+          if (
+            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
+          ) {
+            return true;
+          }
+        } else {
+          if (this.isTileOccupied(passedPosition, boardState)) {
+            break;
+          }
+        }
       }
     }
     return false;
