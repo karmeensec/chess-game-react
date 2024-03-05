@@ -309,56 +309,26 @@ export default class Referee {
     boardState: Piece[]
   ): boolean {
     for (let i = 1; i < 8; i++) {
-      // Top/Bottom
-
-      if (desiredPosition.x === initialPosition.x) {
-        const multiplier = desiredPosition.y < initialPosition.y ? -1 : 1;
-
-        const passedPosition: Position = {
-          x: initialPosition.x,
-          y: initialPosition.y + i * multiplier,
-        };
-
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
-      // Right/Left
-
-      if (desiredPosition.y === initialPosition.y) {
-        const multiplier = desiredPosition.x < initialPosition.x ? -1 : 1;
-
-        const passedPosition: Position = {
-          x: initialPosition.x + i * multiplier,
-          y: initialPosition.y,
-        };
-
-        if (samePosition(passedPosition, desiredPosition)) {
-          if (
-            this.isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)
-          ) {
-            return true;
-          }
-        } else {
-          if (this.isTileOccupied(passedPosition, boardState)) {
-            break;
-          }
-        }
-      }
-
       // Diagonal
 
-      const multiplierX = desiredPosition.x < initialPosition.x ? -1 : 1;
-      const multiplierY = desiredPosition.y < initialPosition.y ? -1 : 1;
+      let multiplierX; // = desiredPosition.x < initialPosition.x ? -1 : 1;
+      let multiplierY; // = desiredPosition.y < initialPosition.y ? -1 : 1;
+
+      if (desiredPosition.x < initialPosition.x) {
+        multiplierX = -1;
+      } else if (desiredPosition.x > initialPosition.x) {
+        multiplierX = 1;
+      } else {
+        multiplierX = 0;
+      }
+
+      if (desiredPosition.y < initialPosition.y) {
+        multiplierY = -1;
+      } else if (desiredPosition.y > initialPosition.y) {
+        multiplierY = 1;
+      } else {
+        multiplierY = 0;
+      }
 
       const passedPosition: Position = {
         x: initialPosition.x + i * multiplierX,
