@@ -427,15 +427,24 @@ const Chessboard = () => {
   }
 
   return (
-    <div
-      id="chessboard"
-      onMouseDown={(e) => grabPiece(e)}
-      onMouseMove={(e) => movePiece(e)}
-      onMouseUp={(e) => dropPiece(e)}
-      ref={chessboardRef}
-    >
-      {board}
-    </div>
+    <>
+      <div id="pawn-promotion-modal">
+        <img src={whiteRook} />
+        <img src={whiteKnight} />
+        <img src={whiteBishop} />
+        <img src={whiteQueen} />
+      </div>
+
+      <div
+        id="chessboard"
+        onMouseDown={(e) => grabPiece(e)}
+        onMouseMove={(e) => movePiece(e)}
+        onMouseUp={(e) => dropPiece(e)}
+        ref={chessboardRef}
+      >
+        {board}
+      </div>
+    </>
   );
 };
 
