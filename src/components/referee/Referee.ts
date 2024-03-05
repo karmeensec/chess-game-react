@@ -302,6 +302,28 @@ export default class Referee {
     return false;
   }
 
+  queenMovement(
+    initialPosition: Position,
+    desiredPosition: Position,
+    team: TeamType,
+    boardState: Piece[]
+  ): boolean {
+    // Top
+
+    if (
+      desiredPosition.y > initialPosition.y &&
+      desiredPosition.x === initialPosition.x
+    ) {
+      console.log("Moving up");
+    }
+
+    // Right
+    // Bottom
+    // Left
+
+    return false;
+  }
+
   isValidMove(
     initialPosition: Position,
     desiredPosition: Position,
@@ -341,6 +363,15 @@ export default class Referee {
 
       case PieceType.ROOK:
         validMove = this.rookMovement(
+          initialPosition,
+          desiredPosition,
+          team,
+          boardState
+        );
+        break;
+
+      case PieceType.QUEEN:
+        validMove = this.queenMovement(
           initialPosition,
           desiredPosition,
           team,
