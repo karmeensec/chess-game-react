@@ -247,6 +247,7 @@ const Chessboard = () => {
   const board = [];
 
   const chessboardRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const referee = new Referee();
 
@@ -382,6 +383,7 @@ const Chessboard = () => {
               const promotionRow = piece.team === TeamType.MY ? 7 : 0;
 
               if (y === promotionRow) {
+                modalRef.current?.classList.remove("hidden");
                 setPromotionPawn(piece);
               }
 
@@ -435,7 +437,7 @@ const Chessboard = () => {
 
   return (
     <>
-      <div id="pawn-promotion-modal">
+      <div id="pawn-promotion-modal" className="hidden" ref={modalRef}>
         <div className="modal-body">
           <img src={whiteRook} onClick={() => promotePawn(PieceType.ROOK)} />
           <img
