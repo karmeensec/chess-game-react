@@ -418,43 +418,38 @@ const Chessboard = () => {
       return;
     }
 
-    const updatedPieces = pieces.reduce((results, piece) => {
+    const updatedPieces = pieces.map((piece) => {
       if (samePosition(piece.position, promotionPawn.position)) {
-        piece.type === pieceType;
-        const teamType =
-          piece.team === TeamType.MY ? teamTypes[1] : teamTypes[0];
+        const teamType = promotionPawn.team;
         let promotedImage = "";
 
         switch (pieceType) {
-          case PieceType.ROOK: {
+          case PieceType.ROOK:
             promotedImage = teamType === TeamType.MY ? whiteRook : blackRook;
             break;
-          }
-
-          case PieceType.KNIGHT: {
+          case PieceType.KNIGHT:
             promotedImage =
               teamType === TeamType.MY ? whiteKnight : blackKnight;
             break;
-          }
-
-          case PieceType.BISHOP: {
+          case PieceType.BISHOP:
             promotedImage =
               teamType === TeamType.MY ? whiteBishop : blackBishop;
             break;
-          }
-
-          case PieceType.QUEEN: {
+          case PieceType.QUEEN:
             promotedImage = teamType === TeamType.MY ? whiteQueen : blackQueen;
             break;
-          }
+          default:
+            break;
         }
 
-        piece.image = promotedImage;
+        return {
+          ...piece,
+          type: pieceType,
+          image: promotedImage,
+        };
       }
-      results.push(piece);
-
-      return results;
-    }, [] as Piece[]);
+      return piece;
+    });
 
     setPieces(updatedPieces);
     modalRef.current?.classList.add("hidden");
