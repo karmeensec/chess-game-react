@@ -500,9 +500,10 @@ const Chessboard = () => {
 
       const key = `${i}-${j}`;
 
-      const currentPiece = pieces.find((p) =>
-        samePosition(p.position, grabPosition)
-      );
+      const currentPiece =
+        activePiece !== null
+          ? pieces.find((p) => samePosition(p.position, grabPosition))
+          : undefined;
 
       const highlight = currentPiece?.possibleMoves
         ? currentPiece.possibleMoves.some((p) =>
