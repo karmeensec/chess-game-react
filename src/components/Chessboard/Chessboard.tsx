@@ -460,6 +460,31 @@ const Chessboard = () => {
     modalRef.current?.classList.add("hidden");
   };
 
+  const promotionTeamType = () => {
+    const promotedTeam =
+      promotionPawn?.team === TeamType.MY ? teamTypes[1] : teamTypes[0];
+
+    return promotedTeam;
+  };
+
+  const getPromotionImageSrc = (
+    teamType: TeamType,
+    pieceType: PieceType
+  ): string => {
+    switch (pieceType) {
+      case PieceType.ROOK:
+        return teamType === TeamType.MY ? whiteRook : blackRook;
+      case PieceType.KNIGHT:
+        return teamType === TeamType.MY ? whiteKnight : blackKnight;
+      case PieceType.BISHOP:
+        return teamType === TeamType.MY ? whiteBishop : blackBishop;
+      case PieceType.QUEEN:
+        return teamType === TeamType.MY ? whiteQueen : blackQueen;
+      default:
+        return "";
+    }
+  };
+
   for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
     for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
       const startZero = 2;
@@ -481,16 +506,22 @@ const Chessboard = () => {
     <>
       <div id="pawn-promotion-modal" className="hidden" ref={modalRef}>
         <div className="modal-body">
-          <img src={whiteRook} onClick={() => promotePawn(PieceType.ROOK)} />
           <img
-            src={whiteKnight}
+            src={getPromotionImageSrc(promotionTeamType(), PieceType.ROOK)}
+            onClick={() => promotePawn(PieceType.ROOK)}
+          />
+          <img
+            src={getPromotionImageSrc(promotionTeamType(), PieceType.KNIGHT)}
             onClick={() => promotePawn(PieceType.KNIGHT)}
           />
           <img
-            src={whiteBishop}
+            src={getPromotionImageSrc(promotionTeamType(), PieceType.BISHOP)}
             onClick={() => promotePawn(PieceType.BISHOP)}
           />
-          <img src={whiteQueen} onClick={() => promotePawn(PieceType.QUEEN)} />
+          <img
+            src={getPromotionImageSrc(promotionTeamType(), PieceType.QUEEN)}
+            onClick={() => promotePawn(PieceType.QUEEN)}
+          />
         </div>
       </div>
 
