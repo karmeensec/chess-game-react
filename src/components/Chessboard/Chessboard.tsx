@@ -414,8 +414,50 @@ const Chessboard = () => {
   };
 
   const promotePawn = (pieceType: PieceType) => {
-    console.log(`Promotion Pawn into ${pieceType}`);
-    console.log(promotionPawn);
+    if (promotionPawn === undefined) {
+      return;
+    }
+
+    const updatedPieces = pieces.reduce((results, piece) => {
+      if (samePosition(piece.position, promotionPawn.position)) {
+        piece.type === pieceType;
+        const teamType =
+          piece.team === TeamType.MY ? teamTypes[1] : teamTypes[0];
+        let promotedImage = "";
+
+        switch (pieceType) {
+          case PieceType.ROOK: {
+            promotedImage = teamType === TeamType.MY ? whiteRook : blackRook;
+            break;
+          }
+
+          case PieceType.KNIGHT: {
+            promotedImage =
+              teamType === TeamType.MY ? whiteKnight : blackKnight;
+            break;
+          }
+
+          case PieceType.BISHOP: {
+            promotedImage =
+              teamType === TeamType.MY ? whiteBishop : blackBishop;
+            break;
+          }
+
+          case PieceType.QUEEN: {
+            promotedImage = teamType === TeamType.MY ? whiteQueen : blackQueen;
+            break;
+          }
+        }
+
+        piece.image = promotedImage;
+      }
+      results.push(piece);
+
+      return results;
+    }, [] as Piece[]);
+
+    setPieces(updatedPieces);
+    modalRef.current?.classList.add("hidden");
   };
 
   for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
