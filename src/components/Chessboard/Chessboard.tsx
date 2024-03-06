@@ -252,6 +252,13 @@ const Chessboard = () => {
   const referee = new Referee();
 
   const grabPiece = (e: React.MouseEvent) => {
+    setPieces((currentPieces) => {
+      return currentPieces.map((p) => {
+        p.possibleMoves = referee.getValidMoves(p, currentPieces);
+        return p;
+      });
+    });
+
     const element = e.target as HTMLDivElement;
     const chessboard = chessboardRef.current;
 
