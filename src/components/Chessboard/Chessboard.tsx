@@ -500,7 +500,19 @@ const Chessboard = () => {
 
       const key = `${i}-${j}`;
 
-      board.push(<Tile number={number} image={image} key={key} />);
+      const currentPiece = pieces.find((p) =>
+        samePosition(p.position, grabPosition)
+      );
+
+      const highlight = currentPiece?.possibleMoves
+        ? currentPiece.possibleMoves.some((p) =>
+            samePosition(p, { x: i, y: j })
+          )
+        : false;
+
+      board.push(
+        <Tile number={number} image={image} key={key} highlight={highlight} />
+      );
     }
   }
 
