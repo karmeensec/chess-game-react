@@ -382,7 +382,7 @@ const Chessboard = () => {
 
               const promotionRow = piece.team === TeamType.MY ? 7 : 0;
 
-              if (y === promotionRow) {
+              if (y === promotionRow && piece.type === PieceType.PAWN) {
                 modalRef.current?.classList.remove("hidden");
                 setPromotionPawn(piece);
               }
