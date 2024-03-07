@@ -235,7 +235,12 @@ initialBoardState.push({
 
 // ----------------------------------------------------------------
 
-const Chessboard = () => {
+interface ChessboardProps {
+  getPossibleMoves: () => Position[];
+  playMove: () => void;
+}
+
+const Chessboard = ({ getPossibleMoves, playMove }) => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
 
   const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
@@ -321,8 +326,6 @@ const Chessboard = () => {
   };
 
   const dropPiece = (e: React.MouseEvent) => {
-    console.log(e.target);
-
     const chessboard = chessboardRef.current;
 
     if (activePiece && chessboard) {
