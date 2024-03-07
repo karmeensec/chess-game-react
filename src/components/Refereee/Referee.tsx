@@ -296,6 +296,7 @@ const Referee = () => {
       return piece;
     });
 
+    updatePossibleMoves();
     setPieces(updatedPieces);
     modalRef.current?.classList.add("hidden");
   };
