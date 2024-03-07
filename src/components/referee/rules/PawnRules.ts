@@ -100,5 +100,13 @@ export const getPossiblePawnMoves = (
       possibleMoves.push(specialMove);
     }
   }
+
+  if (isTileOccupiedByEnemy(upperLeftAttack, boardState, pawn.team)) {
+    possibleMoves.push(upperLeftAttack);
+  }
+
+  if (isTileOccupiedByEnemy(upperRightAttack, boardState, pawn.team)) {
+    possibleMoves.push(upperRightAttack);
+  }
   return possibleMoves;
 };
