@@ -1,4 +1,4 @@
-import { Piece, Position, TeamType } from "../../../constants";
+import { Piece, Position, TeamType, samePosition } from "../../../constants";
 import { isTileOccupied, isTileOccupiedByEnemy } from "./GeneralRules.ts";
 
 export const pawnMovement = (
@@ -90,6 +90,12 @@ export const getPossiblePawnMoves = (
     y: pawn.position.y + pawnDirection,
   };
 
+  const leftPosition: Position = { x: pawn.position.x - 1, y: pawn.position.y };
+  const rightPosition: Position = {
+    x: pawn.position.x + 1,
+    y: pawn.position.y,
+  };
+
   if (!isTileOccupied(regularMove, boardState)) {
     possibleMoves.push(regularMove);
 
@@ -103,10 +109,26 @@ export const getPossiblePawnMoves = (
 
   if (isTileOccupiedByEnemy(upperLeftAttack, boardState, pawn.team)) {
     possibleMoves.push(upperLeftAttack);
-  }
+  } else if (!isTileOccupied(upperLeftAttack, boardState)) {
+    const leftPiece = boardState.find((p) => {
+      samePosition(p.position, leftPosition);
+    });
 
+    if (leftPiece !== null && leftPiece?.enPassant) {
+      possibleMoves.push(upperLeftAttack);
+    }
+  }
   if (isTileOccupiedByEnemy(upperRightAttack, boardState, pawn.team)) {
     possibleMoves.push(upperRightAttack);
+  } else if (!isTileOccupied(upperRightAttack, boardState)) {
+    const rightPiece = boardState.find((p) => {
+      samePosition(p.position, rightPosition);
+    });
+
+    if (rightPiece !== null && rightPiece?.enPassant) {
+      possibleMoves.push(upperRightAttack);
+    }
   }
+
   return possibleMoves;
 };
