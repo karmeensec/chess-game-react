@@ -7,6 +7,7 @@ import {
   queenMovement,
   kingMovement,
   getPossiblePawnMoves,
+  getPossibleKnightMoves,
 } from "./rules";
 
 export default class Referee {
@@ -82,6 +83,9 @@ export default class Referee {
     switch (piece.type) {
       case PieceType.PAWN:
         return getPossiblePawnMoves(piece, boardState);
+
+      case PieceType.KNIGHT:
+        return getPossibleKnightMoves(piece, boardState);
 
       default:
         return [];
