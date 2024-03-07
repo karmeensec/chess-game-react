@@ -33,3 +33,38 @@ export const knightMovement = (
 
   return false;
 };
+
+export const getPossibleKnightMoves = (
+  knight: Piece,
+  boardState: Piece[]
+): Position[] => {
+  const possibleMoves: Position[] = [];
+
+  for (let i = -1; i < 2; i += 2) {
+    for (let j = -1; j < 2; j += 2) {
+      const verticalMoves: Position = {
+        x: knight.position.x + j,
+        y: knight.position.y + i * 2,
+      };
+
+      const horizontalMoves: Position = {
+        x: knight.position.x + i * 2,
+        y: knight.position.y + j,
+      };
+
+      if (
+        isTileEmptyOrOccupiedByEnemy(verticalMoves, boardState, knight.team)
+      ) {
+        possibleMoves.push(verticalMoves);
+      }
+
+      if (
+        isTileEmptyOrOccupiedByEnemy(horizontalMoves, boardState, knight.team)
+      ) {
+        possibleMoves.push(horizontalMoves);
+      }
+    }
+  }
+
+  return possibleMoves;
+};
