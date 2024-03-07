@@ -1,6 +1,5 @@
 import Chessboard from "../Chessboard/Chessboard";
 import {
-  Piece,
   PieceType,
   Position,
   TeamType,
@@ -31,6 +30,7 @@ import blackBishop from "../../assets/images/bishop (1).png";
 import whiteBishop from "../../assets/images/bishop.png";
 import blackQueen from "../../assets/images/queen (1).png";
 import whiteQueen from "../../assets/images/queen.png";
+import { Piece } from "../../models/Piece";
 
 const Referee = () => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);

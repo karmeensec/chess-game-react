@@ -2,19 +2,9 @@ import "./Chessboard.css";
 import Tile from "../Tile/Tile";
 import blackPawn from "../../assets/images/pawn (1).png";
 import whitePawn from "../../assets/images/pawn.png";
-import blackRook from "../../assets/images/rook (1).png";
-import whiteRook from "../../assets/images/rook.png";
-import blackKnight from "../../assets/images/knight (1).png";
-import whiteKnight from "../../assets/images/knight.png";
-import blackBishop from "../../assets/images/bishop (1).png";
-import whiteBishop from "../../assets/images/bishop.png";
-import blackQueen from "../../assets/images/queen (1).png";
-import whiteQueen from "../../assets/images/queen.png";
-import blackKing from "../../assets/images/king (1).png";
-import whiteKing from "../../assets/images/king.png";
+
 import { FunctionComponent, useRef, useState } from "react";
 import {
-  Piece,
   PieceType,
   Position,
   HORIZONTAL_AXIS,
@@ -24,6 +14,7 @@ import {
   GRID_SIZE,
   samePosition,
 } from "../../constants.ts";
+import { Piece } from "../../models/Piece.ts";
 
 // Pawns
 
@@ -52,184 +43,6 @@ for (let i = 0; i < 8; i++) {
     team: teamTypes[i % 2],
   });
 }
-
-// Rooks
-
-initialBoardState.push({
-  image: blackRook,
-  position: {
-    x: 0,
-    y: 7,
-  },
-
-  type: PieceType.ROOK,
-  team: teamTypes[0],
-});
-initialBoardState.push({
-  image: blackRook,
-  position: {
-    x: 7,
-    y: 7,
-  },
-
-  type: PieceType.ROOK,
-  team: teamTypes[0],
-});
-
-initialBoardState.push({
-  image: whiteRook,
-  position: {
-    x: 0,
-    y: 0,
-  },
-
-  type: PieceType.ROOK,
-  team: teamTypes[1],
-});
-initialBoardState.push({
-  image: whiteRook,
-  position: {
-    x: 7,
-    y: 0,
-  },
-
-  type: PieceType.ROOK,
-  team: teamTypes[1],
-});
-
-// Knights
-
-initialBoardState.push({
-  image: blackKnight,
-  position: {
-    x: 1,
-    y: 7,
-  },
-
-  type: PieceType.KNIGHT,
-  team: teamTypes[0],
-});
-initialBoardState.push({
-  image: blackKnight,
-  position: {
-    x: 6,
-    y: 7,
-  },
-
-  type: PieceType.KNIGHT,
-  team: teamTypes[0],
-});
-
-initialBoardState.push({
-  image: whiteKnight,
-  position: {
-    x: 1,
-    y: 0,
-  },
-
-  type: PieceType.KNIGHT,
-  team: teamTypes[1],
-});
-initialBoardState.push({
-  image: whiteKnight,
-  position: {
-    x: 6,
-    y: 0,
-  },
-
-  type: PieceType.KNIGHT,
-  team: teamTypes[1],
-});
-
-// Bishops
-
-initialBoardState.push({
-  image: blackBishop,
-  position: {
-    x: 2,
-    y: 7,
-  },
-
-  type: PieceType.BISHOP,
-  team: teamTypes[0],
-});
-initialBoardState.push({
-  image: blackBishop,
-  position: {
-    x: 5,
-    y: 7,
-  },
-
-  type: PieceType.BISHOP,
-  team: teamTypes[0],
-});
-
-initialBoardState.push({
-  image: whiteBishop,
-  position: {
-    x: 2,
-    y: 0,
-  },
-
-  type: PieceType.BISHOP,
-  team: teamTypes[1],
-});
-initialBoardState.push({
-  image: whiteBishop,
-  position: {
-    x: 5,
-    y: 0,
-  },
-
-  type: PieceType.BISHOP,
-  team: teamTypes[1],
-});
-
-// Queen
-
-initialBoardState.push({
-  image: blackQueen,
-  position: {
-    x: 3,
-    y: 7,
-  },
-
-  type: PieceType.QUEEN,
-  team: teamTypes[0],
-});
-initialBoardState.push({
-  image: whiteQueen,
-  position: {
-    x: 3,
-    y: 0,
-  },
-
-  type: PieceType.QUEEN,
-  team: teamTypes[1],
-});
-
-// King
-
-initialBoardState.push({
-  image: blackKing,
-  position: {
-    x: 4,
-    y: 7,
-  },
-
-  type: PieceType.KING,
-  team: teamTypes[0],
-});
-initialBoardState.push({
-  image: whiteKing,
-  position: {
-    x: 4,
-    y: 0,
-  },
-
-  type: PieceType.KING,
-  team: teamTypes[1],
-});
 
 // ----------------------------------------------------------------
 

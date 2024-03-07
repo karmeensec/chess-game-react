@@ -1,4 +1,5 @@
-import { Piece, Position, TeamType, samePosition } from "../../../constants";
+import { Position, TeamType, samePosition } from "../../../constants";
+import { Piece } from "../../../models/Piece";
 
 export const isTileOccupied = (
   position: Position,
