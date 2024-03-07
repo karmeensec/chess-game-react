@@ -12,6 +12,7 @@ const Tile = ({ number, image, highlight }: TileProps) => {
     number % 2 === 0 && "black-tile",
     number % 2 !== 0 && "white-tile",
     highlight && "tile-highlight",
+    image && "chess-piece-tile",
   ]
     .filter(Boolean)
     .join(" ");
