@@ -70,28 +70,34 @@ export const getPossiblePawnMoves = (
   const pawnDirection = pawn.team === TeamType.MY ? 1 : -1;
   const specialRow = pawn.team === TeamType.MY ? 1 : 6;
 
-  if (
-    !isTileOccupied(
-      { x: pawn.position.x, y: pawn.position.y + pawnDirection },
-      boardState
-    )
-  ) {
-    possibleMoves.push({
-      x: pawn.position.x,
-      y: pawn.position.y + pawnDirection,
-    });
+  const regularMove: Position = {
+    x: pawn.position.x,
+    y: pawn.position.y + pawnDirection,
+  };
+
+  const specialMove: Position = {
+    x: regularMove.x,
+    y: regularMove.y + pawnDirection,
+  };
+
+  const upperLeftAttack: Position = {
+    x: pawn.position.x - 1,
+    y: pawn.position.y + pawnDirection,
+  };
+
+  const upperRightAttack: Position = {
+    x: pawn.position.x + 1,
+    y: pawn.position.y + pawnDirection,
+  };
+
+  if (!isTileOccupied(regularMove, boardState)) {
+    possibleMoves.push(regularMove);
 
     if (
       pawn.position.y === specialRow &&
-      !isTileOccupied(
-        { x: pawn.position.x, y: pawn.position.y + pawnDirection * 2 },
-        boardState
-      )
+      !isTileOccupied(specialMove, boardState)
     ) {
-      possibleMoves.push({
-        x: pawn.position.x,
-        y: pawn.position.y + pawnDirection * 2,
-      });
+      possibleMoves.push(specialMove);
     }
   }
   return possibleMoves;
