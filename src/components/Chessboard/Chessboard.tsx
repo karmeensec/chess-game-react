@@ -1,47 +1,30 @@
 import "./Chessboard.css";
 import Tile from "../Tile/Tile";
-import blackPawn from "../../assets/images/pawn (1).png";
-import whitePawn from "../../assets/images/pawn.png";
 
 import { FunctionComponent, useRef, useState } from "react";
 import {
   PieceType,
-  Position,
   HORIZONTAL_AXIS,
   initialBoardState,
-  teamTypes,
   VERTICAL_AXIS,
   GRID_SIZE,
   samePosition,
+  TeamType,
 } from "../../constants.ts";
-import { Piece } from "../../models/Piece.ts";
+import { Piece, Position } from "../../models";
 
 // Pawns
 
 for (let i = 0; i < 8; i++) {
-  initialBoardState.push({
-    image: blackPawn,
-    position: {
-      x: i,
-      y: 6,
-    },
-
-    type: PieceType.PAWN,
-    team: teamTypes[i % 2],
-  });
+  initialBoardState.push(
+    new Piece(new Position(i, 6), PieceType.PAWN, TeamType.OPPONENT)
+  );
 }
 
 for (let i = 0; i < 8; i++) {
-  initialBoardState.push({
-    image: whitePawn,
-    position: {
-      x: i,
-      y: 1,
-    },
-
-    type: PieceType.PAWN,
-    team: teamTypes[i % 2],
-  });
+  initialBoardState.push(
+    new Piece(new Position(i, 1), PieceType.PAWN, TeamType.MY)
+  );
 }
 
 // ----------------------------------------------------------------
@@ -55,7 +38,9 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
   playMove,
   pieces,
 }) => {
-  const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
+  const [grabPosition, setGrabPosition] = useState<Position>(
+    new Position(-1, -1)
+  );
 
   const [activePiece, setActivePiece] = useState<HTMLElement | null>(null);
 
@@ -73,7 +58,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE)
       );
 
-      setGrabPosition({ x: grabX, y: grabY });
+      setGrabPosition(new Position(grabX, grabY));
 
       const mouseX = e.clientX - GRID_SIZE / 2;
       const mouseY = e.clientY - GRID_SIZE / 2;
@@ -135,7 +120,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
       );
 
       if (currentPiece) {
-        const success = playMove(currentPiece, { x, y });
+        const success = playMove(currentPiece, new Position(x, y));
 
         if (!success) {
           activePiece.style.position = "relative";
@@ -154,7 +139,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
       const number = i + j + startZero;
 
       const piece = pieces.find((p) =>
-        samePosition(p.position, { x: i, y: j })
+        samePosition(p.position, new Position(i, j))
       );
 
       const image = piece ? piece.image : "";
@@ -168,7 +153,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
 
       const highlight = currentPiece?.possibleMoves
         ? currentPiece.possibleMoves.some((p) =>
-            samePosition(p, { x: i, y: j })
+            samePosition(p, new Position(i, j))
           )
         : false;
 
