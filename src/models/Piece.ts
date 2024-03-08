@@ -1,4 +1,4 @@
-import { PieceType, TeamType } from "../constants";
+import { PieceType, TeamType } from "../types";
 import { Position } from "./Position";
 
 export class Piece {

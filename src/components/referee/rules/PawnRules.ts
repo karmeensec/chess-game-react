@@ -1,5 +1,5 @@
-import { TeamType } from "../../../constants";
 import { Piece, Position } from "../../../models";
+import { TeamType } from "../../../types.ts";
 import { isTileOccupied, isTileOccupiedByEnemy } from "./GeneralRules.ts";
 
 export const pawnMovement = (

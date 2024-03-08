@@ -1,10 +1,5 @@
 import Chessboard from "../Chessboard/Chessboard";
-import {
-  PieceType,
-  TeamType,
-  initialBoardState,
-  teamTypes,
-} from "../../constants";
+import { initialBoardState, teamTypes } from "../../constants";
 import { useEffect, useRef, useState } from "react";
 import {
   pawnMovement,
@@ -29,6 +24,7 @@ import whiteBishop from "../../assets/images/bishop_w.png";
 import blackQueen from "../../assets/images/queen_b.png";
 import whiteQueen from "../../assets/images/queen_w.png";
 import { Piece, Position } from "../../models";
+import { PieceType, TeamType } from "../../types";
 
 const Referee = () => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);

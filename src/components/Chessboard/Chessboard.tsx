@@ -3,14 +3,13 @@ import Tile from "../Tile/Tile";
 
 import { FunctionComponent, useRef, useState } from "react";
 import {
-  PieceType,
   HORIZONTAL_AXIS,
   initialBoardState,
   VERTICAL_AXIS,
   GRID_SIZE,
-  TeamType,
 } from "../../constants.ts";
 import { Piece, Position } from "../../models";
+import { PieceType, TeamType } from "../../types.ts";
 
 // Pawns
 
