@@ -1,7 +1,6 @@
 import Chessboard from "../Chessboard/Chessboard";
 import {
   PieceType,
-  Position,
   TeamType,
   initialBoardState,
   samePosition,
@@ -22,15 +21,15 @@ import {
   getPossibleQueenMoves,
   getPossibleKingMoves,
 } from "../referee/rules";
-import blackRook from "../../assets/images/rook (1).png";
-import whiteRook from "../../assets/images/rook.png";
-import blackKnight from "../../assets/images/knight (1).png";
-import whiteKnight from "../../assets/images/knight.png";
-import blackBishop from "../../assets/images/bishop (1).png";
-import whiteBishop from "../../assets/images/bishop.png";
-import blackQueen from "../../assets/images/queen (1).png";
-import whiteQueen from "../../assets/images/queen.png";
-import { Piece } from "../../models/Piece";
+import blackRook from "../../assets/images/rook_b.png";
+import whiteRook from "../../assets/images/rook_w.png";
+import blackKnight from "../../assets/images/knight_b.png";
+import whiteKnight from "../../assets/images/knight_w.png";
+import blackBishop from "../../assets/images/bishop_b.png";
+import whiteBishop from "../../assets/images/bishop_w.png";
+import blackQueen from "../../assets/images/queen_b.png";
+import whiteQueen from "../../assets/images/queen_w.png";
+import { Piece, Position } from "../../models";
 
 const Referee = () => {
   const [pieces, setPieces] = useState<Piece[]>(initialBoardState);
@@ -75,10 +74,10 @@ const Referee = () => {
           piece.position.y = destination.y;
           results.push(piece);
         } else if (
-          !samePosition(piece.position, {
-            x: destination.x,
-            y: destination.y - pawnDirection,
-          })
+          !samePosition(
+            piece.position,
+            new Position(destination.x, destination.y - pawnDirection)
+          )
         ) {
           if (piece.type === PieceType.PAWN) {
             piece.enPassant === false;
@@ -115,7 +114,10 @@ const Referee = () => {
 
           results.push(piece);
         } else if (
-          !samePosition(piece.position, { x: destination.x, y: destination.y })
+          !samePosition(
+            piece.position,
+            new Position(destination.x, destination.y)
+          )
         ) {
           if (piece.type === PieceType.PAWN) {
             piece.enPassant === false;
