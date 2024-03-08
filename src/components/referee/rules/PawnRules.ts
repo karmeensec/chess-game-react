@@ -1,4 +1,4 @@
-import { TeamType, samePosition } from "../../../constants";
+import { TeamType } from "../../../constants";
 import { Piece, Position } from "../../../models";
 import { isTileOccupied, isTileOccupiedByEnemy } from "./GeneralRules.ts";
 
@@ -109,7 +109,7 @@ export const getPossiblePawnMoves = (
     possibleMoves.push(upperLeftAttack);
   } else if (!isTileOccupied(upperLeftAttack, boardState)) {
     const leftPiece = boardState.find((p) => {
-      samePosition(p.position, leftPosition);
+      p.samePosition(leftPosition);
     });
 
     if (leftPiece !== null && leftPiece?.enPassant) {
@@ -120,7 +120,7 @@ export const getPossiblePawnMoves = (
     possibleMoves.push(upperRightAttack);
   } else if (!isTileOccupied(upperRightAttack, boardState)) {
     const rightPiece = boardState.find((p) => {
-      samePosition(p.position, rightPosition);
+      p.samePosition(rightPosition);
     });
 
     if (rightPiece !== null && rightPiece?.enPassant) {

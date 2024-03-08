@@ -8,7 +8,6 @@ import {
   initialBoardState,
   VERTICAL_AXIS,
   GRID_SIZE,
-  samePosition,
   TeamType,
 } from "../../constants.ts";
 import { Piece, Position } from "../../models";
@@ -115,9 +114,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
         Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE)
       );
 
-      const currentPiece = pieces.find((p) =>
-        samePosition(p.position, grabPosition)
-      );
+      const currentPiece = pieces.find((p) => p.samePosition(grabPosition));
 
       if (currentPiece) {
         const success = playMove(currentPiece, new Position(x, y));
@@ -138,9 +135,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
       const startZero = 2;
       const number = i + j + startZero;
 
-      const piece = pieces.find((p) =>
-        samePosition(p.position, new Position(i, j))
-      );
+      const piece = pieces.find((p) => p.samePosition(new Position(i, j)));
 
       const image = piece ? piece.image : "";
 
@@ -148,12 +143,12 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
 
       const currentPiece =
         activePiece !== null
-          ? pieces.find((p) => samePosition(p.position, grabPosition))
+          ? pieces.find((p) => p.samePosition(grabPosition))
           : undefined;
 
       const highlight = currentPiece?.possibleMoves
         ? currentPiece.possibleMoves.some((p) =>
-            samePosition(p, new Position(i, j))
+            p.samePosition(new Position(i, j))
           )
         : false;
 

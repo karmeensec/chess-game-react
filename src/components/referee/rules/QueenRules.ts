@@ -1,4 +1,4 @@
-import { TeamType, samePosition } from "../../../constants";
+import { TeamType } from "../../../constants";
 import { Piece, Position } from "../../../models";
 import {
   isTileEmptyOrOccupiedByEnemy,
@@ -33,7 +33,7 @@ export const queenMovement = (
       initialPosition.y + i * multiplierY
     );
 
-    if (samePosition(passedPosition, desiredPosition)) {
+    if (passedPosition.samePosition(desiredPosition)) {
       if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
         return true;
       }

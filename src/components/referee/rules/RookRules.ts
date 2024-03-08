@@ -1,4 +1,4 @@
-import { TeamType, samePosition } from "../../../constants";
+import { TeamType } from "../../../constants";
 import { Piece, Position } from "../../../models";
 import {
   isTileEmptyOrOccupiedByEnemy,
@@ -21,7 +21,7 @@ export const rookMovement = (
         initialPosition.y + i * multiplier
       );
 
-      if (samePosition(passedPosition, desiredPosition)) {
+      if (passedPosition.samePosition(desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
           return true;
         }
@@ -42,7 +42,7 @@ export const rookMovement = (
         initialPosition.y
       );
 
-      if (samePosition(passedPosition, desiredPosition)) {
+      if (passedPosition.samePosition(desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
           return true;
         }

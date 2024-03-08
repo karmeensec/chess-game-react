@@ -3,7 +3,6 @@ import {
   PieceType,
   TeamType,
   initialBoardState,
-  samePosition,
   teamTypes,
 } from "../../constants";
 import { useEffect, useRef, useState } from "react";
@@ -68,14 +67,13 @@ const Referee = () => {
 
     if (enPassantMove) {
       const updatedPieces = pieces.reduce((results, piece) => {
-        if (samePosition(piece.position, playedPiece.position)) {
+        if (piece.samePiecePosition(playedPiece)) {
           piece.enPassant === false;
           piece.position.x = destination.x;
           piece.position.y = destination.y;
           results.push(piece);
         } else if (
-          !samePosition(
-            piece.position,
+          !piece.samePosition(
             new Position(destination.x, destination.y - pawnDirection)
           )
         ) {
@@ -97,7 +95,7 @@ const Referee = () => {
       // Update the piece position
 
       const updatedPieces = pieces.reduce((results, piece) => {
-        if (samePosition(piece.position, playedPiece.position)) {
+        if (piece.samePiecePosition(playedPiece)) {
           piece.enPassant =
             Math.abs(playedPiece.position.y - destination.y) === 2 &&
             piece.type === PieceType.PAWN;
@@ -114,10 +112,7 @@ const Referee = () => {
 
           results.push(piece);
         } else if (
-          !samePosition(
-            piece.position,
-            new Position(destination.x, destination.y)
-          )
+          !piece.samePosition(new Position(destination.x, destination.y))
         ) {
           if (piece.type === PieceType.PAWN) {
             piece.enPassant === false;
@@ -266,7 +261,7 @@ const Referee = () => {
     }
 
     const updatedPieces = pieces.map((piece) => {
-      if (samePosition(piece.position, promotionPawn.position)) {
+      if (piece.samePiecePosition(promotionPawn)) {
         const teamType = promotionPawn.team;
         let promotedImage = "";
 
