@@ -1,5 +1,5 @@
-import { Position, TeamType, samePosition } from "../../../constants";
-import { Piece } from "../../../models/Piece";
+import { TeamType, samePosition } from "../../../constants";
+import { Piece, Position } from "../../../models";
 import {
   isTileEmptyOrOccupiedByEnemy,
   isTileOccupied,
@@ -18,10 +18,10 @@ export const bishopMovement = (
       desiredPosition.x > initialPosition.x &&
       desiredPosition.y > initialPosition.y
     ) {
-      const passedPosition: Position = {
-        x: initialPosition.x + i,
-        y: initialPosition.y + i,
-      };
+      const passedPosition = new Position(
+        initialPosition.x + i,
+        initialPosition.y + i
+      );
 
       if (samePosition(passedPosition, desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
@@ -40,10 +40,10 @@ export const bishopMovement = (
       desiredPosition.x > initialPosition.x &&
       desiredPosition.y < initialPosition.y
     ) {
-      const passedPosition: Position = {
-        x: initialPosition.x + i,
-        y: initialPosition.y - i,
-      };
+      const passedPosition = new Position(
+        initialPosition.x + i,
+        initialPosition.y - i
+      );
 
       if (samePosition(passedPosition, desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
@@ -62,10 +62,10 @@ export const bishopMovement = (
       desiredPosition.x < initialPosition.x &&
       desiredPosition.y < initialPosition.y
     ) {
-      const passedPosition: Position = {
-        x: initialPosition.x - i,
-        y: initialPosition.y - i,
-      };
+      const passedPosition = new Position(
+        initialPosition.x - i,
+        initialPosition.y - i
+      );
 
       if (samePosition(passedPosition, desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
@@ -84,10 +84,10 @@ export const bishopMovement = (
       desiredPosition.x < initialPosition.x &&
       desiredPosition.y > initialPosition.y
     ) {
-      const passedPosition: Position = {
-        x: initialPosition.x - i,
-        y: initialPosition.y + i,
-      };
+      const passedPosition = new Position(
+        initialPosition.x - i,
+        initialPosition.y + i
+      );
 
       if (samePosition(passedPosition, desiredPosition)) {
         if (isTileEmptyOrOccupiedByEnemy(passedPosition, boardState, team)) {
@@ -112,7 +112,10 @@ export const getPossibleBishopMoves = (
 
   // Upper Right
   for (let i = 1; i < 8; i++) {
-    const destination = { x: bishop.position.x + i, y: bishop.position.y + i };
+    const destination = new Position(
+      bishop.position.x + i,
+      bishop.position.y + i
+    );
 
     if (!isTileOccupied(destination, boardState)) {
       possibleMoves.push(destination);
@@ -126,7 +129,10 @@ export const getPossibleBishopMoves = (
 
   // Bottom Right
   for (let i = 1; i < 8; i++) {
-    const destination = { x: bishop.position.x + i, y: bishop.position.y - i };
+    const destination = new Position(
+      bishop.position.x + i,
+      bishop.position.y - i
+    );
 
     if (!isTileOccupied(destination, boardState)) {
       possibleMoves.push(destination);
@@ -140,7 +146,10 @@ export const getPossibleBishopMoves = (
 
   // Bottom Left
   for (let i = 1; i < 8; i++) {
-    const destination = { x: bishop.position.x - i, y: bishop.position.y - i };
+    const destination = new Position(
+      bishop.position.x - i,
+      bishop.position.y - i
+    );
 
     if (!isTileOccupied(destination, boardState)) {
       possibleMoves.push(destination);
@@ -154,7 +163,10 @@ export const getPossibleBishopMoves = (
 
   // Upper Left
   for (let i = 1; i < 8; i++) {
-    const destination = { x: bishop.position.x - i, y: bishop.position.y + i };
+    const destination = new Position(
+      bishop.position.x - i,
+      bishop.position.y + i
+    );
 
     if (!isTileOccupied(destination, boardState)) {
       possibleMoves.push(destination);

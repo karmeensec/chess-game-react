@@ -1,5 +1,5 @@
-import { Position, TeamType } from "../../../constants";
-import { Piece } from "../../../models/Piece";
+import { TeamType } from "../../../constants";
+import { Piece, Position } from "../../../models";
 import { isTileEmptyOrOccupiedByEnemy } from "./GeneralRules";
 
 export const knightMovement = (
@@ -43,15 +43,14 @@ export const getPossibleKnightMoves = (
 
   for (let i = -1; i < 2; i += 2) {
     for (let j = -1; j < 2; j += 2) {
-      const verticalMoves: Position = {
-        x: knight.position.x + j,
-        y: knight.position.y + i * 2,
-      };
-
-      const horizontalMoves: Position = {
-        x: knight.position.x + i * 2,
-        y: knight.position.y + j,
-      };
+      const verticalMoves = new Position(
+        knight.position.x + j,
+        knight.position.y + i * 2
+      );
+      const horizontalMoves = new Position(
+        knight.position.x + i * 2,
+        knight.position.y + j
+      );
 
       if (
         isTileEmptyOrOccupiedByEnemy(verticalMoves, boardState, knight.team)

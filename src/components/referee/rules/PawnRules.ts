@@ -1,5 +1,5 @@
-import { Position, TeamType, samePosition } from "../../../constants";
-import { Piece } from "../../../models/Piece.ts";
+import { TeamType, samePosition } from "../../../constants";
+import { Piece, Position } from "../../../models";
 import { isTileOccupied, isTileOccupiedByEnemy } from "./GeneralRules.ts";
 
 export const pawnMovement = (
@@ -21,7 +21,7 @@ export const pawnMovement = (
     if (
       !isTileOccupiedByEnemy(desiredPosition, boardState, team) &&
       !isTileOccupied(
-        { x: desiredPosition.x, y: desiredPosition.y - pawnDirection },
+        new Position(desiredPosition.x, desiredPosition.y - pawnDirection),
         boardState
       )
     ) {
@@ -71,31 +71,28 @@ export const getPossiblePawnMoves = (
   const pawnDirection = pawn.team === TeamType.MY ? 1 : -1;
   const specialRow = pawn.team === TeamType.MY ? 1 : 6;
 
-  const regularMove: Position = {
-    x: pawn.position.x,
-    y: pawn.position.y + pawnDirection,
-  };
+  const regularMove = new Position(
+    pawn.position.x,
+    pawn.position.y + pawnDirection
+  );
 
-  const specialMove: Position = {
-    x: regularMove.x,
-    y: regularMove.y + pawnDirection,
-  };
+  const specialMove = new Position(
+    regularMove.x,
+    regularMove.y + pawnDirection
+  );
 
-  const upperLeftAttack: Position = {
-    x: pawn.position.x - 1,
-    y: pawn.position.y + pawnDirection,
-  };
+  const upperLeftAttack = new Position(
+    pawn.position.x - 1,
+    pawn.position.y + pawnDirection
+  );
 
-  const upperRightAttack: Position = {
-    x: pawn.position.x + 1,
-    y: pawn.position.y + pawnDirection,
-  };
+  const upperRightAttack = new Position(
+    pawn.position.x + 1,
+    pawn.position.y + pawnDirection
+  );
 
-  const leftPosition: Position = { x: pawn.position.x - 1, y: pawn.position.y };
-  const rightPosition: Position = {
-    x: pawn.position.x + 1,
-    y: pawn.position.y,
-  };
+  const leftPosition = new Position(pawn.position.x - 1, pawn.position.y);
+  const rightPosition = new Position(pawn.position.x + 1, pawn.position.y);
 
   if (!isTileOccupied(regularMove, boardState)) {
     possibleMoves.push(regularMove);
