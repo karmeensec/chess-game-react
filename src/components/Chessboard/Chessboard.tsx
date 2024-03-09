@@ -94,7 +94,7 @@ const Chessboard: FunctionComponent<ChessboardProps> = ({
       const currentPiece = pieces.find((p) => p.samePosition(grabPosition));
 
       if (currentPiece) {
-        const success = playMove(currentPiece, new Position(x, y));
+        const success = playMove(currentPiece.clone(), new Position(x, y));
 
         if (!success) {
           activePiece.style.position = "relative";

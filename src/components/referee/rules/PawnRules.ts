@@ -1,4 +1,5 @@
 import { Piece, Position } from "../../../models";
+import { Pawn } from "../../../models/Pawn.ts";
 import { TeamType } from "../../../types.ts";
 import { isTileOccupied, isTileOccupiedByEnemy } from "./GeneralRules.ts";
 
@@ -112,7 +113,7 @@ export const getPossiblePawnMoves = (
       p.samePosition(leftPosition);
     });
 
-    if (leftPiece !== null && leftPiece?.enPassant) {
+    if (leftPiece !== null && (leftPiece as Pawn)?.enPassant) {
       possibleMoves.push(upperLeftAttack);
     }
   }
@@ -123,7 +124,7 @@ export const getPossiblePawnMoves = (
       p.samePosition(rightPosition);
     });
 
-    if (rightPiece !== null && rightPiece?.enPassant) {
+    if (rightPiece !== null && (rightPiece as Pawn)?.enPassant) {
       possibleMoves.push(upperRightAttack);
     }
   }
