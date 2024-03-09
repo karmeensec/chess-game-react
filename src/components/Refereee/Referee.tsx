@@ -36,6 +36,8 @@ const Referee = () => {
       m.samePosition(destination)
     );
 
+    if (!validMove) return false;
+
     const enPassantMove = isEnPassantMove(
       playedPiece.position,
       destination,
