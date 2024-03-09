@@ -1,5 +1,5 @@
 import Chessboard from "../Chessboard/Chessboard";
-import { initialBoard, teamTypes } from "../../constants";
+import { initialBoard } from "../../constants";
 import { useEffect, useRef, useState } from "react";
 import {
   pawnMovement,
@@ -9,14 +9,7 @@ import {
   queenMovement,
   kingMovement,
 } from "../referee/rules";
-import blackRook from "../../assets/images/rook_b.png";
-import whiteRook from "../../assets/images/rook_w.png";
-import blackKnight from "../../assets/images/knight_b.png";
-import whiteKnight from "../../assets/images/knight_w.png";
-import blackBishop from "../../assets/images/bishop_b.png";
-import whiteBishop from "../../assets/images/bishop_w.png";
-import blackQueen from "../../assets/images/queen_b.png";
-import whiteQueen from "../../assets/images/queen_w.png";
+
 import { Piece, Position } from "../../models";
 import { PieceType, TeamType } from "../../types";
 import { Pawn } from "../../models/Pawn";
@@ -179,66 +172,43 @@ const Referee = () => {
       return;
     }
 
-    board.pieces = board.pieces.map((piece) => {
+    board.pieces = board.pieces.reduce((results, piece) => {
       if (piece.samePiecePosition(promotionPawn)) {
-        const teamType = promotionPawn.team;
+        piece.type = pieceType;
+        const teamType = piece.team === TeamType.MY ? "w" : "b";
         let promotedImage = "";
 
         switch (pieceType) {
           case PieceType.ROOK:
-            promotedImage = teamType === TeamType.MY ? whiteRook : blackRook;
+            promotedImage = "rook";
             break;
           case PieceType.KNIGHT:
-            promotedImage =
-              teamType === TeamType.MY ? whiteKnight : blackKnight;
+            promotedImage = "knight";
             break;
           case PieceType.BISHOP:
-            promotedImage =
-              teamType === TeamType.MY ? whiteBishop : blackBishop;
+            promotedImage = "bishop";
             break;
           case PieceType.QUEEN:
-            promotedImage = teamType === TeamType.MY ? whiteQueen : blackQueen;
+            promotedImage = "queen";
             break;
           default:
             break;
         }
 
-        return {
-          ...piece,
-          type: pieceType,
-          image: promotedImage,
-        };
+        piece.image = `/src/assets/images/${promotedImage}_${teamType}.png`;
       }
-      return piece;
-    });
+      results.push(piece);
+      return results;
+    }, [] as Piece[]);
 
     updatePossibleMoves();
     modalRef.current?.classList.add("hidden");
   };
 
   const promotionTeamType = () => {
-    const promotedTeam =
-      promotionPawn?.team === TeamType.MY ? teamTypes[1] : teamTypes[0];
+    const promotedTeam = promotionPawn?.team === TeamType.MY ? "w" : "b";
 
     return promotedTeam;
-  };
-
-  const getPromotionImageSrc = (
-    teamType: TeamType,
-    pieceType: PieceType
-  ): string => {
-    switch (pieceType) {
-      case PieceType.ROOK:
-        return teamType === TeamType.MY ? whiteRook : blackRook;
-      case PieceType.KNIGHT:
-        return teamType === TeamType.MY ? whiteKnight : blackKnight;
-      case PieceType.BISHOP:
-        return teamType === TeamType.MY ? whiteBishop : blackBishop;
-      case PieceType.QUEEN:
-        return teamType === TeamType.MY ? whiteQueen : blackQueen;
-      default:
-        return "";
-    }
   };
 
   return (
@@ -246,20 +216,20 @@ const Referee = () => {
       <div id="pawn-promotion-modal" className="hidden" ref={modalRef}>
         <div className="modal-body">
           <img
-            src={getPromotionImageSrc(promotionTeamType(), PieceType.ROOK)}
             onClick={() => promotePawn(PieceType.ROOK)}
+            src={`src/assets/images/rook_${promotionTeamType()}.png`}
           />
           <img
-            src={getPromotionImageSrc(promotionTeamType(), PieceType.KNIGHT)}
-            onClick={() => promotePawn(PieceType.KNIGHT)}
-          />
-          <img
-            src={getPromotionImageSrc(promotionTeamType(), PieceType.BISHOP)}
             onClick={() => promotePawn(PieceType.BISHOP)}
+            src={`src/assets/images/bishop_${promotionTeamType()}.png`}
           />
           <img
-            src={getPromotionImageSrc(promotionTeamType(), PieceType.QUEEN)}
+            onClick={() => promotePawn(PieceType.KNIGHT)}
+            src={`src/assets/images/knight_${promotionTeamType()}.png`}
+          />
+          <img
             onClick={() => promotePawn(PieceType.QUEEN)}
+            src={`src/assets/images/queen_${promotionTeamType()}.png`}
           />
         </div>
       </div>
