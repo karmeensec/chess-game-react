@@ -2,30 +2,8 @@ import "./Chessboard.css";
 import Tile from "../Tile/Tile";
 
 import { FunctionComponent, useRef, useState } from "react";
-import {
-  HORIZONTAL_AXIS,
-  initialBoardState,
-  VERTICAL_AXIS,
-  GRID_SIZE,
-} from "../../constants.ts";
+import { HORIZONTAL_AXIS, VERTICAL_AXIS, GRID_SIZE } from "../../constants.ts";
 import { Piece, Position } from "../../models";
-import { PieceType, TeamType } from "../../types.ts";
-
-// Pawns
-
-for (let i = 0; i < 8; i++) {
-  initialBoardState.push(
-    new Piece(new Position(i, 6), PieceType.PAWN, TeamType.OPPONENT)
-  );
-}
-
-for (let i = 0; i < 8; i++) {
-  initialBoardState.push(
-    new Piece(new Position(i, 1), PieceType.PAWN, TeamType.MY)
-  );
-}
-
-// ----------------------------------------------------------------
 
 interface ChessboardProps {
   playMove: (piece: Piece, position: Position) => boolean;
