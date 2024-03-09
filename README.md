@@ -1,3 +1,10 @@
+
+![Screenshot 2024-03-08 194716](https://github.com/kamawallsec/chess-game-react/assets/84046930/e58ff7d8-54a7-4276-a795-8ad18af82810)
+
+![Screenshot (229)](https://github.com/kamawallsec/chess-game-react/assets/84046930/89a56461-97b1-4bff-ad80-cc5f3ff48958)
+
+![Screenshot 2024-03-09 195001](https://github.com/kamawallsec/chess-game-react/assets/84046930/5623ca9e-4fe6-4557-a67b-6fb1aa5db21f)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
