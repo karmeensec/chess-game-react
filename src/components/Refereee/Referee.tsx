@@ -62,7 +62,11 @@ const Referee = () => {
 
     if (destination.y === promotionRow && playedPiece.isPawn) {
       modalRef.current?.classList.remove("hidden");
-      setPromotionPawn(playedPiece);
+      setPromotionPawn((prev) => {
+        const clonedPlayedPiece = playedPiece.clone();
+        clonedPlayedPiece.position = destination.clone();
+        return clonedPlayedPiece;
+      });
     }
 
     return playedMoveIsValid;
@@ -172,36 +176,24 @@ const Referee = () => {
       return;
     }
 
-    board.pieces = board.pieces.reduce((results, piece) => {
-      if (piece.samePiecePosition(promotionPawn)) {
-        piece.type = pieceType;
-        const teamType = piece.team === TeamType.MY ? "w" : "b";
-        let promotedImage = "";
-
-        switch (pieceType) {
-          case PieceType.ROOK:
-            promotedImage = "rook";
-            break;
-          case PieceType.KNIGHT:
-            promotedImage = "knight";
-            break;
-          case PieceType.BISHOP:
-            promotedImage = "bishop";
-            break;
-          case PieceType.QUEEN:
-            promotedImage = "queen";
-            break;
-          default:
-            break;
+    setBoard((prev) => {
+      const clonedBoard = board.clone();
+      clonedBoard.pieces = clonedBoard.pieces.reduce((results, piece) => {
+        if (piece.samePiecePosition(promotionPawn)) {
+          results.push(
+            new Piece(piece.position.clone(), pieceType, piece.team)
+          );
+        } else {
+          results.push(piece);
         }
 
-        piece.image = `/src/assets/images/${promotedImage}_${teamType}.png`;
-      }
-      results.push(piece);
-      return results;
-    }, [] as Piece[]);
+        return results;
+      }, [] as Piece[]);
 
-    updatePossibleMoves();
+      clonedBoard.calculateAllMoves();
+      return clonedBoard;
+    });
+
     modalRef.current?.classList.add("hidden");
   };
 
