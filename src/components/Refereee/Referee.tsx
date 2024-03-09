@@ -9,7 +9,6 @@ import {
   queenMovement,
   kingMovement,
 } from "../referee/rules";
-
 import { Piece, Position } from "../../models";
 import { PieceType, TeamType } from "../../types";
 import { Pawn } from "../../models/Pawn";
@@ -29,13 +28,12 @@ const Referee = () => {
   };
 
   const playMove = (playedPiece: Piece, destination: Position): boolean => {
+    if (playedPiece.possibleMoves === undefined) return false;
+
     let playedMoveIsValid = false;
 
-    const validMove = isValidMove(
-      playedPiece.position,
-      destination,
-      playedPiece.type,
-      playedPiece.team
+    const validMove = playedPiece.possibleMoves.some((m) =>
+      m.samePosition(destination)
     );
 
     const enPassantMove = isEnPassantMove(
